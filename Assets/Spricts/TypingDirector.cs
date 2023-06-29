@@ -120,12 +120,12 @@ public class Typing : MonoBehaviour
 
         for (int i = 0; i < moji.Length; i++)
         {
-            string a = dictionary.dic[moji[i].ToString()];
+            string a = dictionary.dic[moji[i].ToString()][0];
 
-            //if (moji[i].ToString() == "‚Á" && i + 1 < moji.Length)
-            //{
-            //    a = dictionary.dic[moji[i+1].ToString()][0].ToString();
-            //}
+            if (moji[i].ToString() == "‚Á" && i + 1 < moji.Length)
+            {
+                a = dictionary.dic[moji[i+1].ToString()][0].ToString();
+            }
 
             _romSliceList.Add(a);
 
@@ -221,7 +221,7 @@ public class Typing : MonoBehaviour
         {
             string currentFuri = _fString[furiCount].ToString();
 
-            List<string> stringList = dictionary.dicEx[currentFuri];
+            List<string> stringList = dictionary.dic[currentFuri];
 
             Debug.Log(string.Join(",", stringList));
 
