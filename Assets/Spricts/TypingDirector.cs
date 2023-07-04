@@ -319,7 +319,7 @@ public class Typing : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(rom[romNum].ToString()))
+            if (preCheck && Input.GetKeyDown(rom[romNum].ToString()))
             {
                 _romSliceList[furiCount] = rom;
                 _aString = string.Join("", _GetRomSliceListWithoutSkip());
