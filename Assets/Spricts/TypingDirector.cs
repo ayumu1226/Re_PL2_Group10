@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Linq;
 using Unity.VisualScripting.Dependencies.Sqlite;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class Typing : MonoBehaviour
 {
@@ -268,6 +269,7 @@ public class Typing : MonoBehaviour
         if (time <= 0)
         {
             tText.text = "I—¹";
+            SceneManager.LoadScene("ResultScene");
         }
     }
 }

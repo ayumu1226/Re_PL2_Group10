@@ -329,7 +329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 441af31ac20f93343ab603efa255e104, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 60
+  time: 5
   tText: {fileID: 1748168144}
   fText: {fileID: 1973173515}
   qText: {fileID: 2066548464}
