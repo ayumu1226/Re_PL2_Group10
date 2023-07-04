@@ -5,9 +5,8 @@ using UnityEngine.UI;
 using System.Linq;
 using Unity.VisualScripting.Dependencies.Sqlite;
 using Unity.VisualScripting;
-using UnityEngine.SceneManagement;
 
-public class Typing : MonoBehaviour
+public class TypingD : MonoBehaviour
 {
 
     [SerializeField] float time;
@@ -106,7 +105,7 @@ public class Typing : MonoBehaviour
 
         CreateRomSliceList(_fString);
 
-        _aString = string.Join("", _romSliceList);
+        _aString = string.Join("", _GetRomSliceListWithoutSkip());
 
         fText.text = _fString;
         qText.text = _qString;
@@ -123,11 +122,23 @@ public class Typing : MonoBehaviour
         {
             string a = dictionary.dic[moji[i].ToString()][0];
 
-            if (moji[i].ToString() == "Ç¡" && i + 1 < moji.Length)
+            if (moji[i].ToString() == "Ç·" || moji[i].ToString() == "Ç„" || moji[i].ToString() == "ÇÂ")
             {
-                a = dictionary.dic[moji[i+1].ToString()][0].ToString();
+                a = "SKIP";
             }
 
+            else if (moji[i].ToString() == "Ç¡" && i + 1 < moji.Length)
+            {
+                a = dictionary.dic[moji[i + 1].ToString()][0].ToString();
+            }
+            else if (i + 1 < moji.Length)
+            {
+                string addNextMoji = moji[i].ToString() + moji[i + 1].ToString();
+                if (dictionary.dic.ContainsKey(addNextMoji))
+                {
+                    a = addNextMoji;
+                }
+            }
             _romSliceList.Add(a);
 
             for (int j = 0; j < a.Length; j++)
@@ -139,6 +150,31 @@ public class Typing : MonoBehaviour
         Debug.Log(string.Join(",", _romSliceList));
     }
 
+    //è¨ï∂éöÇÃë}ì¸
+    void AddSmallMoji()
+    {
+        int nextMojiNum = _furiCountList[_aNum] + 1;
+
+        if (_fString.Length - 1 < nextMojiNum)
+        {
+            return;
+        }
+
+        string nextMoji = _fString[nextMojiNum].ToString();
+        string a = dictionary.dic[nextMoji][0];
+
+        if (a[0] != 'x' && a[0] != 'l')
+        {
+            return;
+        }
+
+        _romSliceList.Insert(nextMojiNum, a);
+        _romSliceList.RemoveAt(nextMojiNum + 1);
+
+        ReCreateList(_romSliceList);
+        _aString = string.Join("", _GetRomSliceListWithoutSkip());
+    }
+
     void ReCreateList(List<string> romList)
     {
         _furiCountList.Clear();
@@ -147,6 +183,10 @@ public class Typing : MonoBehaviour
         for (int i = 0; i < romList.Count; i++)
         {
             string a = romList[i];
+            if (a == "SKIP")
+            {
+                continue;
+            }
 
             for (int j = 0; j < a.Length; j++)
             {
@@ -155,6 +195,20 @@ public class Typing : MonoBehaviour
             }
         }
         //Debug.Log(string.Join(",", _romSliceList));
+    }
+
+    List<string> _GetRomSliceListWithoutSkip()
+    {
+        List<string> returnList = new List<string>();
+        foreach (string rom in _romSliceList)
+        {
+            if (rom == "SKIP")
+            {
+                continue;
+            }
+            returnList.Add(rom);
+        }
+        return returnList;
     }
 
     // ì¸óÕï∂éöÇ™ê≥âÇÃèÍçá
@@ -222,39 +276,72 @@ public class Typing : MonoBehaviour
         {
             string currentFuri = _fString[furiCount].ToString();
 
-            List<string> stringList = dictionary.dic[currentFuri];
-
-            Debug.Log(string.Join(",", stringList));
-
-            for (int i = 0; i < stringList.Count; i++)
+            if (furiCount < _fString.Length - 1)
             {
-                string rom = stringList[i];
-                int romNum = _romNumList[_aNum];
+                string addNextMoji = _fString[furiCount].ToString() + _fString[furiCount + 1].ToString();
+                Check2(addNextMoji, furiCount, false);
 
-                if (Input.GetKeyDown(rom[romNum].ToString()))
-                {
-                    _romSliceList[furiCount] = rom;
-                    _aString = string.Join("", _romSliceList);
-
-                    ReCreateList(_romSliceList);
-
-                    isCorrect = true;
-
-                    // ê≥â
-                    Correct();
-
-                    if (_aNum >= _aString.Length)
-                    {
-                        NewQuestion();
-                    }
-                    break;
-                }
             }
+
+            if (!isCorrect)
+            {
+                string moji = _fString[furiCount].ToString();
+                Check2(moji, furiCount, true);
+            }
+
+
         }
         if (!isCorrect)
         {
             // ïsê≥â
             Incorrect();
+        }
+    }
+
+    void Check2(string currentFuri, int furiCount, bool addSmallMoji)
+    {
+        List<string> stringList = dictionary.dic[currentFuri];
+
+        Debug.Log(string.Join(",", stringList));
+
+        for (int i = 0; i < stringList.Count; i++)
+        {
+            string rom = stringList[i];
+            int romNum = _romNumList[_aNum];
+
+            bool preCheck = true;
+
+            for (int j = 0; j < romNum; j++)
+            {
+                if (rom[j] != _romSliceList[furiCount][j])
+                {
+                    preCheck = false;
+                }
+            }
+
+            if (Input.GetKeyDown(rom[romNum].ToString()))
+            {
+                _romSliceList[furiCount] = rom;
+                _aString = string.Join("", _GetRomSliceListWithoutSkip());
+
+                ReCreateList(_romSliceList);
+
+                isCorrect = true;
+
+                if (addSmallMoji)
+                {
+                    AddSmallMoji();
+                }
+
+                // ê≥â
+                Correct();
+
+                if (_aNum >= _aString.Length)
+                {
+                    NewQuestion();
+                }
+                break;
+            }
         }
     }
 
@@ -269,7 +356,6 @@ public class Typing : MonoBehaviour
         if (time <= 0)
         {
             tText.text = "èIóπ";
-            SceneManager.LoadScene("ResultScene");
         }
     }
 }
