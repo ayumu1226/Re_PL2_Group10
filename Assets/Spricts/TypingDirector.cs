@@ -122,11 +122,23 @@ public class Typing : MonoBehaviour
         {
             string a = dictionary.dic[moji[i].ToString()][0];
 
-            if (moji[i].ToString() == "‚Á" && i + 1 < moji.Length)
+            if (moji[i].ToString() == "‚á" || moji[i].ToString() == "‚ã" || moji[i].ToString() == "‚å" )
+            {
+                a = "SKIP";
+            }
+
+            else if (moji[i].ToString() == "‚Á" && i + 1 < moji.Length)
             {
                 a = dictionary.dic[moji[i+1].ToString()][0].ToString();
             }
-
+            else if (i+1 < moji.Length)
+            {
+                string addNextMoji = moji[i].ToString() + moji[i+1].ToString();
+                if(dictionary.dic.ContainsKey(addNextMoji))
+                {
+                    a = addNextMoji;
+                }
+            }
             _romSliceList.Add(a);
 
             for (int j = 0; j < a.Length; j++)
@@ -146,6 +158,10 @@ public class Typing : MonoBehaviour
         for (int i = 0; i < romList.Count; i++)
         {
             string a = romList[i];
+            if (a == "SKIP")
+            {
+                continue;
+            }
 
             for (int j = 0; j < a.Length; j++)
             {
@@ -154,6 +170,20 @@ public class Typing : MonoBehaviour
             }
         }
         //Debug.Log(string.Join(",", _romSliceList));
+    }
+
+    List<string> _GetRomSliceListWithoutSkip()
+    {
+        List<string> returnList = new List<string>();
+        foreach (string a in _romSliceList)
+        {
+            if ( rom == "SKIP")
+            {
+                continue;
+            }
+            returnList.Add(rom);
+        }
+        return returnList;
     }
 
     // “ü—Í•¶š‚ª³‰ğ‚Ìê‡
