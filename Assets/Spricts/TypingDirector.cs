@@ -122,21 +122,21 @@ public class Typing : MonoBehaviour
         {
             string a = dictionary.dic[moji[i].ToString()][0];
 
-            if (moji[i].ToString() == "‚á" || moji[i].ToString() == "‚ã" || moji[i].ToString() == "‚å" )
+            if (moji[i].ToString() == "‚á" || moji[i].ToString() == "‚ã" || moji[i].ToString() == "‚å")
             {
                 a = "SKIP";
             }
-
             else if (moji[i].ToString() == "‚Á" && i + 1 < moji.Length)
             {
-                a = dictionary.dic[moji[i+1].ToString()][0].ToString();
+                a = dictionary.dic[moji[i + 1].ToString()][0].Substring(0, 1);
             }
             else if (i+1 < moji.Length)
             {
-                string addNextMoji = moji[i].ToString() + moji[i+1].ToString();
+                //‘å•¶Žš+¬•¶Žš‚Ì”»’è
+                string addNextMoji = moji[i].ToString() + moji[i + 1].ToString();
                 if(dictionary.dic.ContainsKey(addNextMoji))
                 {
-                    a = addNextMoji;
+                    a = dictionary.dic[addNextMoji][0]; ;
                 }
             }
             _romSliceList.Add(a);
@@ -279,7 +279,10 @@ public class Typing : MonoBehaviour
             if (furiCount < _fString.Length -1)
             {
                 string addNextMoji = _fString[furiCount].ToString() + _fString[furiCount+1].ToString();
-                Check2(addNextMoji, furiCount, false);
+                if (dictionary.dic.ContainsKey(addNextMoji))
+                {
+                    Check2(addNextMoji, furiCount, false);
+                }
                 
             }
 
@@ -289,8 +292,8 @@ public class Typing : MonoBehaviour
                 Check2(moji, furiCount, true);
             }
 
-            
         }
+
         if (!isCorrect)
         {
             // •s³‰ð
