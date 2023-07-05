@@ -5,12 +5,21 @@ using UnityEngine.UI;
 using System.Linq;
 using Unity.VisualScripting.Dependencies.Sqlite;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
-public class TypingD : MonoBehaviour
+public class Typing : MonoBehaviour
 {
+    public static int inputNum = 0;
+    public static int point = 0;
+    public static int miss = 0;
+
+    // startとendロゴ
+    [SerializeField] GameObject start;
+    [SerializeField] GameObject end;
 
     [SerializeField] float time;
     [SerializeField] Text tText;
+
     // 画面テキスト
     [SerializeField] Text fText;
     [SerializeField] Text qText;
@@ -54,6 +63,10 @@ public class TypingD : MonoBehaviour
 
     private void Start()
     {
+        inputNum = 0;
+        point = 0;
+        miss = 0;
+
         Application.targetFrameRate = 60;
 
         dictionary = GetComponent<Dictionary>();
@@ -69,7 +82,7 @@ public class TypingD : MonoBehaviour
 
     private void Update()
     {
-        if (Input.anyKeyDown)
+        if (time >= 0 && Input.anyKeyDown)
         {
             Check();
         }
@@ -126,17 +139,17 @@ public class TypingD : MonoBehaviour
             {
                 a = "SKIP";
             }
-
             else if (moji[i].ToString() == "っ" && i + 1 < moji.Length)
             {
-                a = dictionary.dic[moji[i + 1].ToString()][0].ToString();
+                a = dictionary.dic[moji[i + 1].ToString()][0].Substring(0, 1);
             }
             else if (i + 1 < moji.Length)
             {
+                //大文字+小文字の判定
                 string addNextMoji = moji[i].ToString() + moji[i + 1].ToString();
                 if (dictionary.dic.ContainsKey(addNextMoji))
                 {
-                    a = addNextMoji;
+                    a = dictionary.dic[addNextMoji][0]; ;
                 }
             }
             _romSliceList.Add(a);
@@ -214,6 +227,8 @@ public class TypingD : MonoBehaviour
     // 入力文字が正解の場合
     private void Correct()
     {
+        point++;
+
         Debug.Log((_aNum + 1) + "文字目:正解");
 
         // 次の文字を出力
@@ -227,6 +242,8 @@ public class TypingD : MonoBehaviour
     // 入力文字が不正解の場合
     private void Incorrect()
     {
+        miss++;
+
         Debug.Log((_aNum + 1) + "文字目:不正解");
 
         // 間違えた文字を赤く表示
@@ -238,6 +255,8 @@ public class TypingD : MonoBehaviour
     // 入力された文字の正誤判定
     private void Check()
     {
+        inputNum++;
+
         // 入力中の文字が何番目か
         int furiCount = _furiCountList[_aNum];
 
@@ -279,7 +298,10 @@ public class TypingD : MonoBehaviour
             if (furiCount < _fString.Length - 1)
             {
                 string addNextMoji = _fString[furiCount].ToString() + _fString[furiCount + 1].ToString();
-                Check2(addNextMoji, furiCount, false);
+                if (dictionary.dic.ContainsKey(addNextMoji))
+                {
+                    Check2(addNextMoji, furiCount, false);
+                }
 
             }
 
@@ -289,8 +311,8 @@ public class TypingD : MonoBehaviour
                 Check2(moji, furiCount, true);
             }
 
-
         }
+
         if (!isCorrect)
         {
             // 不正解
@@ -319,7 +341,7 @@ public class TypingD : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(rom[romNum].ToString()))
+            if (preCheck && Input.GetKeyDown(rom[romNum].ToString()))
             {
                 _romSliceList[furiCount] = rom;
                 _aString = string.Join("", _GetRomSliceListWithoutSkip());
@@ -355,7 +377,28 @@ public class TypingD : MonoBehaviour
 
         if (time <= 0)
         {
-            tText.text = "終了";
+            end.SetActive(true);
+            //Debug.Log(miss);
+
+            if(time <= -3)
+            {
+                SceneManager.LoadScene("ResultScene");
+            }
         }
+    }
+
+    public static int GetPoint()
+    {
+        return point;
+    }
+
+    public static int GetMiss()
+    {
+        return miss;
+    }
+
+    public static int GetInputNum()
+    {
+        return inputNum;
     }
 }
