@@ -334,8 +334,8 @@ MonoBehaviour:
   fText: {fileID: 1973173515}
   qText: {fileID: 2066548464}
   aText: {fileID: 68077374}
-  _furigana: {fileID: 4900000, guid: d31a42d19c7eb1c4b8abbdf90ef2080a, type: 3}
-  _question: {fileID: 4900000, guid: a9a6143a3eb90ce44a7b44e10e59d7ee, type: 3}
+  _furigana: {fileID: 4900000, guid: d5b874f23ca52404f92501e9b4771d8b, type: 3}
+  _question: {fileID: 4900000, guid: d5b874f23ca52404f92501e9b4771d8b, type: 3}
 --- !u!4 &305627049
 Transform:
   m_ObjectHideFlags: 0

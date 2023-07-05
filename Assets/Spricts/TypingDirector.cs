@@ -122,7 +122,7 @@ public class Typing : MonoBehaviour
         {
             string a = dictionary.dic[moji[i].ToString()][0];
 
-            if (moji[i].ToString() == "‚á" || moji[i].ToString() == "‚ã" || moji[i].ToString() == "‚å")
+            if (moji[i].ToString() == "‚á" || moji[i].ToString() == "‚ã" || moji[i].ToString() == "‚å" || moji[i].ToString() == "‚Ÿ" || moji[i].ToString() == "‚¡" || moji[i].ToString() == "‚£" || moji[i].ToString() == "‚¥" || moji[i].ToString() == "‚§")
             {
                 a = "SKIP";
             }
