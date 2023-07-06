@@ -154,13 +154,17 @@ public class Typing : MonoBehaviour
             }
             _romSliceList.Add(a);
 
-            for (int j = 0; j < a.Length; j++)
+            if( a!="SKIP")
             {
-                _furiCountList.Add(i);
-                _romNumList.Add(j);
+                for (int j = 0; j < a.Length; j++)
+                {
+                    _furiCountList.Add(i);
+                    _romNumList.Add(j);
+                }
             }
+            
         }
-        Debug.Log(string.Join(",", _romSliceList));
+        //Debug.Log(string.Join(",", _romSliceList));
     }
 
     //¬•¶Žš‚Ì‘}“ü
@@ -230,7 +234,7 @@ public class Typing : MonoBehaviour
         point++;
 
         Debug.Log((_aNum + 1) + "•¶Žš–Ú:³‰ð");
-
+        
         // ŽŸ‚Ì•¶Žš‚ðo—Í
         _aNum++;
 
@@ -245,7 +249,7 @@ public class Typing : MonoBehaviour
         miss++;
 
         Debug.Log((_aNum + 1) + "•¶Žš–Ú:•s³‰ð");
-
+        
         // ŠÔˆá‚¦‚½•¶Žš‚ðÔ‚­•\Ž¦
         aText.text = "<color=#6A6A6A>" + _aString.Substring(0, _aNum) + "</color>"
                      + "<color=#FF0000>" + _aString.Substring(_aNum, 1) + "</color>"
@@ -277,7 +281,7 @@ public class Typing : MonoBehaviour
         else if (Input.GetKeyDown("n") && furiCount > 0 && _romSliceList[furiCount - 1] == "n")
         {
             _romSliceList[furiCount - 1] = "nn";
-            _aString = string.Join("", _romSliceList);
+            _aString = string.Join("", _GetRomSliceListWithoutSkip());
 
             ReCreateList(_romSliceList);
 
