@@ -10,6 +10,7 @@ using UnityEngine.Experimental.Audio;
 
 public class Typing : MonoBehaviour
 {
+    GameObject timebar;
     private AudioSource audioSource = null;
     public AudioClip AttackSE;
     public AudioClip breakSE;
@@ -20,8 +21,10 @@ public class Typing : MonoBehaviour
     public static int point = 0;
     public static int miss = 0;
     public static int sum = 0;
+    public static bool a = true;
 
     // startÇ∆endÉçÉS
+    [SerializeField] GameObject ready;
     [SerializeField] GameObject start;
     [SerializeField] GameObject end;
 
@@ -71,8 +74,10 @@ public class Typing : MonoBehaviour
 
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        tText.text = "60.0";
 
+        timebar = GameObject.Find("TimebarDirector");
+        audioSource = GetComponent<AudioSource>();
         sum = 0;
         inputNum = 0;
         point = 0;
@@ -93,13 +98,12 @@ public class Typing : MonoBehaviour
 
     private void Update()
     {
-        if (time >= 0 && Input.anyKeyDown)
+        if (0 <= time && time <= 60 && Input.anyKeyDown)
         {
             Check();
         }
 
         TimeCount();
-
     }
 
     void SetList()
@@ -394,13 +398,34 @@ public class Typing : MonoBehaviour
     void TimeCount()
     {
         time -= Time.deltaTime;
-        tText.text = time.ToString("f1");
+        
 
-        GameObject timebar = GameObject.Find("TimebarDirector");
-        timebar.GetComponent<TimebarDirector>().DecreaseTime();
+        if(time > 60.5)
+        {
+            ready.SetActive(true);
+        }
+        else if(60 < time && time <= 60.5)
+        {
+            ready.SetActive(false);
+            start.SetActive(true);
+        } 
+        else if(time <= 60)
+        {
+            tText.text = time.ToString("f1");
+            timebar.GetComponent<TimebarDirector>().DecreaseTime();
+
+            if (a)
+            {
+                GetComponent<AudioSource>().Play();
+            }
+            a = false;
+
+            start.SetActive(false);
+        }
 
         if (-0.017 < time && time <= 0)
         {
+            tText.text = "0";
             PlaySE(endSE);
 
             end.SetActive(true);
