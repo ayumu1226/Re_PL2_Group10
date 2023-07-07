@@ -6,9 +6,16 @@ using System.Linq;
 using Unity.VisualScripting.Dependencies.Sqlite;
 using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
+using UnityEngine.Experimental.Audio;
 
 public class Typing : MonoBehaviour
 {
+    private AudioSource audioSource = null;
+    public AudioClip AttackSE;
+    public AudioClip breakSE;
+    public AudioClip missSE;
+    public AudioClip endSE;
+
     public static int inputNum = 0;
     public static int point = 0;
     public static int miss = 0;
@@ -64,6 +71,9 @@ public class Typing : MonoBehaviour
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
+        sum = 0;
         inputNum = 0;
         point = 0;
         miss = 0;
@@ -109,6 +119,12 @@ public class Typing : MonoBehaviour
         // 0”Ô–Ú‚É–ß‚·
         _aNum = 0;
         sum++;
+        Debug.Log(sum);
+
+        if(sum > 1)
+        {
+            PlaySE(breakSE);
+        }
 
         // ƒ‰ƒ“ƒ_ƒ€‚È”š‚ğ¶¬
         _qNum = Random.Range(0, _qList.Count);
@@ -234,6 +250,7 @@ public class Typing : MonoBehaviour
     private void Correct()
     {
         point++;
+        PlaySE(AttackSE);
 
         Debug.Log((_aNum + 1) + "•¶š–Ú:³‰ğ");
         
@@ -249,6 +266,7 @@ public class Typing : MonoBehaviour
     private void Incorrect()
     {
         miss++;
+        PlaySE(missSE);
 
         Debug.Log((_aNum + 1) + "•¶š–Ú:•s³‰ğ");
         
@@ -381,15 +399,15 @@ public class Typing : MonoBehaviour
         GameObject timebar = GameObject.Find("TimebarDirector");
         timebar.GetComponent<TimebarDirector>().DecreaseTime();
 
-        if (time <= 0)
+        if (-0.017 < time && time <= 0)
         {
-            end.SetActive(true);
-            //Debug.Log(miss);
+            PlaySE(endSE);
 
-            if(time <= -3)
-            {
-                SceneManager.LoadScene("ResultScene");
-            }
+            end.SetActive(true);
+        }
+        if(time <= -3)
+        {
+            SceneManager.LoadScene("ResultScene");
         }
     }
 
@@ -411,5 +429,17 @@ public class Typing : MonoBehaviour
     public static int GetSum()
     {
         return sum;
+    }
+
+    public void PlaySE(AudioClip clip)
+    {
+        if(audioSource != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
+        else
+        {
+            Debug.Log("Œø‰Ê‰¹‚È‚µ");
+        }
     }
 }
