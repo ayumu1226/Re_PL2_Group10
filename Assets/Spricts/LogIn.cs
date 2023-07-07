@@ -71,6 +71,11 @@ public class LogIn : MonoBehaviour
         });
     }
 
+    public void GoToSignUpScene()
+    {
+        SceneManager.LoadScene("SignUpScene");
+    }
+
     public void Userlogout()
     {
         NCMBUser.LogOutAsync((NCMBException e) => {
