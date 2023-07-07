@@ -12,6 +12,7 @@ public class Typing : MonoBehaviour
     public static int inputNum = 0;
     public static int point = 0;
     public static int miss = 0;
+    public static int sum = 0;
 
     // start‚ÆendƒƒS
     [SerializeField] GameObject start;
@@ -107,6 +108,7 @@ public class Typing : MonoBehaviour
     {
         // 0”Ô–Ú‚É–ß‚·
         _aNum = 0;
+        sum++;
 
         // ƒ‰ƒ“ƒ_ƒ€‚È”š‚ğ¶¬
         _qNum = Random.Range(0, _qList.Count);
@@ -404,5 +406,10 @@ public class Typing : MonoBehaviour
     public static int GetInputNum()
     {
         return inputNum;
+    }
+
+    public static int GetSum()
+    {
+        return sum;
     }
 }
