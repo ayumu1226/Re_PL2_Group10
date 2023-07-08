@@ -74,6 +74,7 @@ public class Typing : MonoBehaviour
 
     private void Start()
     {
+        a = true;
         tText.text = "60.0";
 
         timebar = GameObject.Find("TimebarDirector");
@@ -421,11 +422,15 @@ public class Typing : MonoBehaviour
             a = false;
 
             start.SetActive(false);
+
+            if(time <= 0)
+            {
+                tText.text = "0";
+            }
         }
 
         if (-0.017 < time && time <= 0)
         {
-            tText.text = "0";
             PlaySE(endSE);
 
             end.SetActive(true);
