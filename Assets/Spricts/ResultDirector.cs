@@ -23,6 +23,7 @@ public class ResultDirector : MonoBehaviour
     private float perNum;
     private float sNum;
     private static float time;
+    float t;
 
     public void Start()
     {
@@ -63,7 +64,7 @@ public class ResultDirector : MonoBehaviour
 
     private void ChangeText()
     {
-        float t = TimeCounter();
+        t = ResultToTitle.TimeCounter(t);
 
         if(t > 1)
         {

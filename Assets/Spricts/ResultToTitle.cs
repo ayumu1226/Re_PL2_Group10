@@ -17,16 +17,17 @@ public class ResultToTitle : MonoBehaviour
     }
     private void Update()
     {
-        TimeCounter();
+        t = TimeCounter(t);
         if (t > 4.5)
         {
             btn.interactable = true;
         }
     }
-    public float TimeCounter()
+    public static float TimeCounter(float b)
     {
-        t += Time.deltaTime;
-        return t;
+        float a = b;
+        a += Time.deltaTime;
+        return a;
     }
 
     public void Resultbutton2()
