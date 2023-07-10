@@ -22,8 +22,6 @@ public class LogIn : MonoBehaviour
 
     public void LogInButton()
     {
-        print(UserName.text);
-        print(PassWord.text);
         NCMBUser user = new NCMBUser();
         NCMBUser.LogInAsync(UserName.text, PassWord.text, (NCMBException e) => {
             if (e != null)
@@ -33,16 +31,13 @@ public class LogIn : MonoBehaviour
             else
             {
                 UnityEngine.Debug.Log("ログインに成功！");
-                SceneManager.LoadScene("ChooseModeScene");
+                SceneManager.LoadScene("ChooseLevelScene");
             }
         });
     }
 
     public void SignUpButton()
     {
-        print(UserName.text);
-        print(PassWord.text);
-
         NCMBUser user = new NCMBUser();
         user.UserName = UserName.text;
         user.Password = PassWord.text;
@@ -51,7 +46,6 @@ public class LogIn : MonoBehaviour
             if (e != null)
             {
                 UnityEngine.Debug.Log("新規登録に失敗: " + e.ErrorMessage);
-                SceneManager.LoadScene("遷移先のシーン名");
             }
             else
             {
@@ -66,7 +60,7 @@ public class LogIn : MonoBehaviour
                 {
                     UnityEngine.Debug.Log("未ログインまたは取得に失敗");
                 }
-                SceneManager.LoadScene("遷移先のシーン名");
+  
             }
         });
     }

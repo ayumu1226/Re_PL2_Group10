@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using NCMB;
 
 public class ResultDirector : MonoBehaviour
 {
@@ -55,6 +56,25 @@ public class ResultDirector : MonoBehaviour
         mText.text = "";
         pmText.text = "";
         sText.text = "";
+
+        //ここからサーバーへのデータストア処理
+        //NCMBObject（data）を作成
+        NCMBObject data = new NCMBObject("data");
+        //カレントユーザーの確認
+        NCMBUser currentUser = NCMBUser.CurrentUser;
+        if (currentUser != null)
+        {
+            UnityEngine.Debug.Log("ログイン中のユーザー: " + currentUser.UserName);
+        }
+        else
+        {
+            UnityEngine.Debug.Log("未ログインまたは取得に失敗");
+        }
+        //UserNameとscoreをdataクラスに保存
+        data["score"] = sNum;
+        data["UserName"] = currentUser.UserName;
+        data.SaveAsync();
+
     }
 
     private void Update()
