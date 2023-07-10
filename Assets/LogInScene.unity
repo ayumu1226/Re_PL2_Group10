@@ -211,7 +211,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 2016456455}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 8914054300473263732, guid: 8cdbe3a139ec248b19816b3201bcf817, type: 3}
       propertyPath: clientKey
@@ -223,19 +223,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8914054300473263733, guid: 8cdbe3a139ec248b19816b3201bcf817, type: 3}
       propertyPath: m_RootOrder
-      value: -1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8914054300473263733, guid: 8cdbe3a139ec248b19816b3201bcf817, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -633.08325
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8914054300473263733, guid: 8cdbe3a139ec248b19816b3201bcf817, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -265.02493
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8914054300473263733, guid: 8cdbe3a139ec248b19816b3201bcf817, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.8571287
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8914054300473263733, guid: 8cdbe3a139ec248b19816b3201bcf817, type: 3}
       propertyPath: m_LocalRotation.w
@@ -274,11 +274,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8cdbe3a139ec248b19816b3201bcf817, type: 3}
---- !u!4 &129640126 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8914054300473263733, guid: 8cdbe3a139ec248b19816b3201bcf817, type: 3}
-  m_PrefabInstance: {fileID: 129640125}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &144855942
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,7 +287,7 @@ GameObject:
   - component: {fileID: 144855945}
   - component: {fileID: 144855944}
   m_Layer: 5
-  m_Name: SignIn
+  m_Name: SignUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -363,9 +358,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1930594295}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: Signin
+      - m_Target: {fileID: 1930594300}
+        m_TargetAssemblyTypeName: LogIn, Assembly-CSharp
+        m_MethodName: GoToSignUpScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -552,9 +547,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'SignIn
-
-'
+  m_Text: SignUp
 --- !u!222 &875840658
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1041,7 +1034,6 @@ GameObject:
   - component: {fileID: 1652422603}
   - component: {fileID: 1652422602}
   - component: {fileID: 1652422601}
-  - component: {fileID: 1652422604}
   m_Layer: 5
   m_Name: LogIn
   m_TagString: Untagged
@@ -1114,7 +1106,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1652422604}
+      - m_Target: {fileID: 1930594300}
         m_TargetAssemblyTypeName: LogIn, Assembly-CSharp
         m_MethodName: LogInButton
         m_Mode: 1
@@ -1164,20 +1156,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1652422599}
   m_CullTransparentMesh: 0
---- !u!114 &1652422604
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1652422599}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 744785012919bd04683d3887865c52d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UserName: {fileID: 1643516270}
-  PassWord: {fileID: 1421815369}
 --- !u!1 &1860146241
 GameObject:
   m_ObjectHideFlags: 0
@@ -1271,6 +1249,7 @@ GameObject:
   - component: {fileID: 1930594297}
   - component: {fileID: 1930594296}
   - component: {fileID: 1930594295}
+  - component: {fileID: 1930594300}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1370,13 +1349,27 @@ RectTransform:
   - {fileID: 1652422600}
   - {fileID: 144855943}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1930594300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930594294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 744785012919bd04683d3887865c52d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UserName: {fileID: 1643516270}
+  PassWord: {fileID: 1421815369}
 --- !u!1 &1931083474
 GameObject:
   m_ObjectHideFlags: 0
@@ -1537,35 +1530,3 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1962657595}
   m_CullTransparentMesh: 0
---- !u!1 &2016456454
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2016456455}
-  m_Layer: 0
-  m_Name: NCMBSettings
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2016456455
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2016456454}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 633.08325, y: 265.02493, z: -0.8571287}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 129640126}
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

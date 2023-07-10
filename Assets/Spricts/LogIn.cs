@@ -24,7 +24,7 @@ public class LogIn : MonoBehaviour
     {
         print(UserName.text);
         print(PassWord.text);
-
+        NCMBUser user = new NCMBUser();
         NCMBUser.LogInAsync(UserName.text, PassWord.text, (NCMBException e) => {
             if (e != null)
             {
@@ -33,7 +33,7 @@ public class LogIn : MonoBehaviour
             else
             {
                 UnityEngine.Debug.Log("ƒƒOƒCƒ“‚É¬Œ÷I");
-                SceneManager.LoadScene("ChooseLevelScene");
+                SceneManager.LoadScene("ChooseModeScene");
             }
         });
     }
