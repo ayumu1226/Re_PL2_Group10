@@ -32,6 +32,6 @@ public class ResultToTitle : MonoBehaviour
 
     public void Resultbutton2()
     {
-        SceneManager.LoadScene("TitleScene");
+        SceneManager.LoadScene("ChooseModeScene");
     }
 }

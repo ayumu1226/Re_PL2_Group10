@@ -216,6 +216,7 @@ GameObject:
   - component: {fileID: 382520344}
   - component: {fileID: 382520343}
   - component: {fileID: 382520346}
+  - component: {fileID: 382520347}
   m_Layer: 5
   m_Name: "\u614E\u91CD\u30E2\u30FC\u30C9"
   m_TagString: Untagged
@@ -263,7 +264,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 3
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -350,6 +351,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bac31ec5f9156294282d509d2bd35335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &382520347
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 382520341}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b50b40a0998cf7e42b175ef8b9d55829, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &443909560
 GameObject:
   m_ObjectHideFlags: 0
@@ -870,6 +892,7 @@ GameObject:
   - component: {fileID: 725788524}
   - component: {fileID: 725788523}
   - component: {fileID: 725788526}
+  - component: {fileID: 725788527}
   m_Layer: 5
   m_Name: "\u901A\u5E38\u30E2\u30FC\u30C9"
   m_TagString: Untagged
@@ -917,7 +940,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 3
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -1004,6 +1027,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bac31ec5f9156294282d509d2bd35335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &725788527
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725788521}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b50b40a0998cf7e42b175ef8b9d55829, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1425296935
 GameObject:
   m_ObjectHideFlags: 0
@@ -1235,6 +1279,7 @@ GameObject:
   - component: {fileID: 1749745953}
   - component: {fileID: 1749745952}
   - component: {fileID: 1749745955}
+  - component: {fileID: 1749745956}
   m_Layer: 5
   m_Name: "\u7DF4\u7FD2\u30E2\u30FC\u30C9"
   m_TagString: Untagged
@@ -1282,7 +1327,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 3
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -1369,6 +1414,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bac31ec5f9156294282d509d2bd35335, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1749745956
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1749745950}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b50b40a0998cf7e42b175ef8b9d55829, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1782110821
 GameObject:
   m_ObjectHideFlags: 0
