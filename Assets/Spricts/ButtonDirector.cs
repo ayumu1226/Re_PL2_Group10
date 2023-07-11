@@ -46,6 +46,11 @@ public class ButtonDirector : MonoBehaviour
         SceneManager.LoadScene("GameScene");
     }
 
+    public void buttonback()
+    {
+        SceneManager.LoadScene("ChooseModeScene");
+    }
+
     public static int GetMode()
     {
         return mode;
