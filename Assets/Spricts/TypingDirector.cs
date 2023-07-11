@@ -175,6 +175,11 @@ public class Typing : MonoBehaviour
         {
             string a = dictionary.dic[moji[i].ToString()][0];
 
+            if( i+1 == moji.Length && moji[i].ToString() == "‚ñ" )
+            {
+                a = "nn";
+            }
+
             if (moji[i].ToString() == "‚á" || moji[i].ToString() == "‚ã" || moji[i].ToString() == "‚å" || moji[i].ToString() == "‚Ÿ" || moji[i].ToString() == "‚¡" || moji[i].ToString() == "‚£" || moji[i].ToString() == "‚¥" || moji[i].ToString() == "‚§")
             {
                 a = "SKIP";
