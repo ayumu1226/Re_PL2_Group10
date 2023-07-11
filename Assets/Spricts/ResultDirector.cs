@@ -76,7 +76,7 @@ public class ResultDirector : MonoBehaviour
             case 1:
                 // easyに対する処理
                 //NCMBObjectを作成
-                NCMBObject easy = new NCMBObject("easydata");
+                NCMBObject easy = new NCMBObject("easyData");
                 //カレントユーザーの確認
 
                 //UserNameとscoreをdataクラスに保存
@@ -87,7 +87,7 @@ public class ResultDirector : MonoBehaviour
             case 2:
                 // nomalに対する処理
                 //NCMBObjectを作成
-                NCMBObject nomal = new NCMBObject("easydata");
+                NCMBObject nomal = new NCMBObject("nomalData");
                 //カレントユーザーの確認
 
                 //UserNameとscoreをdataクラスに保存
@@ -98,7 +98,7 @@ public class ResultDirector : MonoBehaviour
             case 3:
                 // hardに対する処理
                 //NCMBObjectを作成
-                NCMBObject hard = new NCMBObject("easydata");
+                NCMBObject hard = new NCMBObject("hardData");
                 //カレントユーザーの確認
 
                 //UserNameとscoreをdataクラスに保存
