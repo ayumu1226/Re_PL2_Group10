@@ -1695,6 +1695,7 @@ MonoBehaviour:
   error: {fileID: 1755740315}
   UserName: {fileID: 1643516270}
   PassWord: {fileID: 1421815369}
+  PassWord2: {fileID: 1421815369}
 --- !u!1 &1931083474
 GameObject:
   m_ObjectHideFlags: 0
