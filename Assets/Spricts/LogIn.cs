@@ -1,8 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Security.Cryptography;
 using System.Collections;
 using NCMB;
 using UnityEngine.SceneManagement;
+using System.Text;
+using System;
 
 public class LogIn : MonoBehaviour
 {
@@ -25,7 +28,7 @@ public class LogIn : MonoBehaviour
     public void LogInButton()
     {
         NCMBUser user = new NCMBUser();
-        NCMBUser.LogInAsync(UserName.text, PassWord.text, (NCMBException e) => {
+        NCMBUser.LogInAsync(UserName.text, HashPassword(PassWord.text), (NCMBException e) => {
             if (e != null)
             {
                 error.text = "ログインに失敗: " + e.ErrorMessage;
@@ -34,7 +37,7 @@ public class LogIn : MonoBehaviour
             else
             {
                 UnityEngine.Debug.Log("ログインに成功！");
-                SceneManager.LoadScene("ChooseLevelScene");
+                SceneManager.LoadScene("ChooseModeScene");
             }
         });
     }
@@ -43,7 +46,7 @@ public class LogIn : MonoBehaviour
     {
         NCMBUser user = new NCMBUser();
         user.UserName = UserName.text;
-        user.Password = PassWord.text;
+        user.Password = HashPassword(PassWord.text); ;
 
         if (!IsValidPassword(PassWord.text))
         {
@@ -99,6 +102,16 @@ public class LogIn : MonoBehaviour
         }
 
         return hasUpperCase && hasLowerCase && hasDigit;
+    }
+
+    private string HashPassword(string password)
+    {
+        using (SHA1 sha1 = SHA1.Create())
+        {
+            byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+            byte[] hashBytes = sha1.ComputeHash(passwordBytes);
+            return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+        }
     }
 
 
