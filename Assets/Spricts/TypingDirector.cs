@@ -72,8 +72,12 @@ public class Typing : MonoBehaviour
     // _romNumList[2] = 0 ¨ 2•¶š–Ú‚Í1‰ñ‚Ì“ü—Í‚Ì‚İ
     private List<int> _romNumList = new List<int>();
 
+    private static int flag; 
+
     private void Start()
     {
+        flag = 0;
+
         switch (ButtonDirector.GetLevel())
         {
             case 1:
@@ -451,8 +455,9 @@ public class Typing : MonoBehaviour
             }
         }
 
-        if (-0.017 < time && time <= 0)
+        if ( flag == 0 && time <= 0)
         {
+            flag = 1;
             PlaySE(endSE);
 
             end.SetActive(true);
