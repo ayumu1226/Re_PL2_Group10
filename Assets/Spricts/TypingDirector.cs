@@ -37,8 +37,8 @@ public class Typing : MonoBehaviour
     [SerializeField] Text aText;
 
     // テキストデータを読み込む
-    [SerializeField] TextAsset _furigana;
-    [SerializeField] TextAsset _question;
+    TextAsset _furigana;
+    TextAsset _question;
     //[SerializeField] TextAsset _answer;
 
     // テキストデータを格納するリスト
@@ -74,6 +74,23 @@ public class Typing : MonoBehaviour
 
     private void Start()
     {
+        switch (ButtonDirector.GetLevel())
+        {
+            case 1:
+                _furigana = Resources.Load("easy_hiragana", typeof(TextAsset)) as TextAsset;
+                _question = Resources.Load("easy_kanji", typeof(TextAsset)) as TextAsset;
+                break;
+            case 2:
+                _furigana = Resources.Load("normal_hiragana", typeof(TextAsset)) as TextAsset;
+                _question = Resources.Load("normal_kanji", typeof(TextAsset)) as TextAsset;
+                break;
+            case 3:
+                _furigana = Resources.Load("hard_hiragana", typeof(TextAsset)) as TextAsset;
+                _question = Resources.Load("hard_kanji", typeof(TextAsset)) as TextAsset;
+                break;
+        }
+
+
         a = true;
         tText.text = "60.0";
 
