@@ -13,6 +13,7 @@ public class LogIn : MonoBehaviour
 
     public InputField UserName;
     public InputField PassWord;
+
     private string currentPlayerName;
 
     void Start()
@@ -28,7 +29,11 @@ public class LogIn : MonoBehaviour
     public void LogInButton()
     {
         NCMBUser user = new NCMBUser();
-        NCMBUser.LogInAsync(UserName.text, HashPassword(PassWord.text), (NCMBException e) => {
+
+        String Password= HashPassword(PassWord.text);
+
+
+        NCMBUser.LogInAsync(UserName.text, Password, (NCMBException e) => {
             if (e != null)
             {
                 error.text = "ƒƒOƒCƒ“‚É¸”s: " + e.ErrorMessage;
