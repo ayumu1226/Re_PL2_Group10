@@ -125,17 +125,5 @@ public class LogIn : MonoBehaviour
         SceneManager.LoadScene("SignUpScene");
     }
 
-    public void Userlogout()
-    {
-        NCMBUser.LogOutAsync((NCMBException e) => {
-            if (e == null)
-            {
-                UnityEngine.Debug.Log("ログアウト成功");
-            }
-            else
-            {
-                UnityEngine.Debug.Log("ログアウトに失敗: " + e.ErrorMessage);
-            }
-        });
-    }
+
 }
