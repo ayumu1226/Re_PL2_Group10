@@ -45,6 +45,13 @@ public class LogIn : MonoBehaviour
         user.UserName = UserName.text;
         user.Password = PassWord.text;
 
+        if (!IsValidPassword(PassWord.text))
+        {
+            UnityEngine.Debug.Log("パスワードは大文字、小文字、数字を含める必要があります");
+            error.text = "新規登録に失敗:パスワードは大文字、小文字、数字を含める必要があります ";
+            return;
+        }
+
         user.SignUpAsync((NCMBException e) => {
             if (e != null)
             {
@@ -68,6 +75,32 @@ public class LogIn : MonoBehaviour
             }
         });
     }
+    private bool IsValidPassword(string password)
+    {
+        // 大文字、小文字、数字をそれぞれ含むか確認
+        bool hasUpperCase = false;
+        bool hasLowerCase = false;
+        bool hasDigit = false;
+
+        foreach (char c in password)
+        {
+            if (char.IsUpper(c))
+            {
+                hasUpperCase = true;
+            }
+            else if (char.IsLower(c))
+            {
+                hasLowerCase = true;
+            }
+            else if (char.IsDigit(c))
+            {
+                hasDigit = true;
+            }
+        }
+
+        return hasUpperCase && hasLowerCase && hasDigit;
+    }
+
 
     public void GoToSignUpScene()
     {
