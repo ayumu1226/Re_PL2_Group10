@@ -544,7 +544,7 @@ GameObject:
   - component: {fileID: 497856511}
   - component: {fileID: 497856510}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: "\u30B2\u30FC\u30E0\u30E2\u30FC\u30C9\u3092\u9078\u629E"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
