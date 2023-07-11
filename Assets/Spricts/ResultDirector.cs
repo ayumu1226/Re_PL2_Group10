@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using NCMB;
+using System.Threading.Tasks;
 
 public class ResultDirector : MonoBehaviour
 {
@@ -81,6 +82,7 @@ public class ResultDirector : MonoBehaviour
                 //UserNameとscoreをdataクラスに保存
                 easy["score"] = sNum;
                 easy["UserName"] = currentUser.UserName;
+                
                 easy.SaveAsync();
                 break;
             case 2:
@@ -91,6 +93,7 @@ public class ResultDirector : MonoBehaviour
                 //UserNameとscoreをdataクラスに保存
                 nomal["score"] = sNum;
                 nomal["UserName"] = currentUser.UserName;
+             
                 nomal.SaveAsync();
                 break;
             case 3:
@@ -101,26 +104,12 @@ public class ResultDirector : MonoBehaviour
                 //UserNameとscoreをdataクラスに保存
                 hard["score"] = sNum;
                 hard["UserName"] = currentUser.UserName;
+              
                 hard.SaveAsync();
                 break;
             default:
                 break;
         }
-
-
-
-
-
-
-
-        //NCMBObject（data）を作成
-        NCMBObject data = new NCMBObject("data");
-        //カレントユーザーの確認
-
-        //UserNameとscoreをdataクラスに保存
-        data["score"] = sNum;
-        data["UserName"] = currentUser.UserName;
-        data.SaveAsync();
 
     }
 
