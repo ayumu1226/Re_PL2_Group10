@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class LogIn : MonoBehaviour
 {
+    public Text error;
+
     public InputField UserName;
     public InputField PassWord;
     private string currentPlayerName;
@@ -26,6 +28,7 @@ public class LogIn : MonoBehaviour
         NCMBUser.LogInAsync(UserName.text, PassWord.text, (NCMBException e) => {
             if (e != null)
             {
+                error.text = "ƒƒOƒCƒ“‚É¸”s: " + e.ErrorMessage;
                 UnityEngine.Debug.Log("ƒƒOƒCƒ“‚É¸”s: " + e.ErrorMessage);
             }
             else
@@ -45,6 +48,7 @@ public class LogIn : MonoBehaviour
         user.SignUpAsync((NCMBException e) => {
             if (e != null)
             {
+                error.text = "V‹K“o˜^‚É¸”s: " + e.ErrorMessage;
                 UnityEngine.Debug.Log("V‹K“o˜^‚É¸”s: " + e.ErrorMessage);
             }
             else
