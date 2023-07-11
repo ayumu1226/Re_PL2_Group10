@@ -13,6 +13,9 @@ public class LogIn : MonoBehaviour
 
     public InputField UserName;
     public InputField PassWord;
+    public InputField PassWord2;
+
+
 
     private string currentPlayerName;
 
@@ -59,6 +62,15 @@ public class LogIn : MonoBehaviour
             error.text = "V‹K“o˜^‚ÉŽ¸”s:ƒpƒXƒ[ƒh‚Í‘å•¶ŽšA¬•¶ŽšA”Žš‚ðŠÜ‚ß‚é•K—v‚ª‚ ‚è‚Ü‚· ";
             return;
         }
+       
+        if (PassWord.text!=PassWord2.text)
+        {
+            UnityEngine.Debug.Log("ã‰º‚Ì“ü—Í‚ªˆê’v‚µ‚Ä‚¢‚Ü‚¹‚ñ");
+            error.text = "V‹K“o˜^‚ÉŽ¸”s:ã‰º‚Ì“ü—Í‚ªˆê’v‚µ‚Ä‚¢‚Ü‚¹‚ñ";
+            return;
+        }
+
+
 
         user.SignUpAsync((NCMBException e) => {
             if (e != null)
