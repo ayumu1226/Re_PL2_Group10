@@ -72,8 +72,12 @@ public class Typing : MonoBehaviour
     // _romNumList[2] = 0 ¨ 2•¶š–Ú‚Í1‰ñ‚Ì“ü—Í‚Ì‚İ
     private List<int> _romNumList = new List<int>();
 
+    private static int flag; 
+
     private void Start()
     {
+        flag = 0;
+
         switch (ButtonDirector.GetLevel())
         {
             case 1:
@@ -174,6 +178,11 @@ public class Typing : MonoBehaviour
         for (int i = 0; i < moji.Length; i++)
         {
             string a = dictionary.dic[moji[i].ToString()][0];
+
+            if( i+1 == moji.Length && moji[i].ToString() == "‚ñ" )
+            {
+                a = "nn";
+            }
 
             if (moji[i].ToString() == "‚á" || moji[i].ToString() == "‚ã" || moji[i].ToString() == "‚å" || moji[i].ToString() == "‚Ÿ" || moji[i].ToString() == "‚¡" || moji[i].ToString() == "‚£" || moji[i].ToString() == "‚¥" || moji[i].ToString() == "‚§")
             {
@@ -446,8 +455,9 @@ public class Typing : MonoBehaviour
             }
         }
 
-        if (-0.017 < time && time <= 0)
+        if ( flag == 0 && time <= 0)
         {
+            flag = 1;
             PlaySE(endSE);
 
             end.SetActive(true);
