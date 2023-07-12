@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour
     {
         time = 0;
 
-        int randomNo = Random.Range(1, 5);
+        int randomNo = Random.Range(1, 30);
 
         string imgStr = randomNo.ToString();
 

@@ -103,13 +103,13 @@ public class Typing : MonoBehaviour
 
         a = true;
 
-        if(ButtonDirector.GetMode() != 3)
+        if(ButtonDirector.GetMode() == 3)
         {
-            tText.text = "60.0";
+            tText.text = "";
         }
         else
         {
-            tText.text = "";
+            tText.text = "60.0";
         }
         
 
@@ -474,7 +474,11 @@ public class Typing : MonoBehaviour
         } 
         else if(time <= 60)
         {
-            tText.text = time.ToString("f1");
+            if((ButtonDirector.GetMode() != 3))
+            {
+                tText.text = time.ToString("f1");
+            }
+            
             timebar.GetComponent<TimebarDirector>().DecreaseTime();
 
             if (a)
