@@ -32,6 +32,9 @@ public class ResultToTitle : MonoBehaviour
 
     public void Resultbutton2()
     {
+        GameObject gameObject = GameObject.Find("BGM");
+        gameObject.GetComponent<BGM>().BGMup();
+
         SceneManager.LoadScene("ChooseModeScene");
     }
 }

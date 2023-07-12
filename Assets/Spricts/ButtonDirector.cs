@@ -7,9 +7,11 @@ public class ButtonDirector : MonoBehaviour
 {
     public static int mode;
     public static int level;
+    
 
     private void Start()
     {
+        
         //mode = 0;
         //level = 0;
     }
@@ -32,16 +34,22 @@ public class ButtonDirector : MonoBehaviour
 
     public void button4() // easy
     {
+        GameObject gameObject = GameObject.Find("BGM");
+        gameObject.GetComponent<BGM>().BGMdown();
         level = 1;
         SceneManager.LoadScene("GameScene");
     }
     public void button5() // normal
     {
+        GameObject gameObject = GameObject.Find("BGM");
+        gameObject.GetComponent<BGM>().BGMdown();
         level = 2;
         SceneManager.LoadScene("GameScene");
     }
     public void button6() // hard
     {
+        GameObject gameObject = GameObject.Find("BGM");
+        gameObject.GetComponent<BGM>().BGMdown();
         level = 3;
         SceneManager.LoadScene("GameScene");
     }
@@ -55,6 +63,12 @@ public class ButtonDirector : MonoBehaviour
     {
         SceneManager.LoadScene("LoginScene");
     }
+
+    public void buttonranking()
+    {
+        SceneManager.LoadScene("ChooseLeaderBoard");
+    }
+
     public static int GetMode()
     {
         return mode;

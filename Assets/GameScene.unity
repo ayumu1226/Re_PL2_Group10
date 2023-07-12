@@ -355,6 +355,8 @@ MonoBehaviour:
   breakSE: {fileID: 8300000, guid: 881c0497b35e9154382fc1db2c6b14ae, type: 3}
   missSE: {fileID: 8300000, guid: 0f4b5a1370ad17b498da3c1a9b665eef, type: 3}
   endSE: {fileID: 8300000, guid: 7028f2bdcc6fb8040919bfe0d112fe09, type: 3}
+  startSE: {fileID: 8300000, guid: 2c232f8ed6fbaf64baf38b4b78fc0429, type: 3}
+  goSE: {fileID: 8300000, guid: d28db92a593585040a88bb9d36dcdcaa, type: 3}
   ready: {fileID: 794366821}
   start: {fileID: 860942990}
   end: {fileID: 1897562628}

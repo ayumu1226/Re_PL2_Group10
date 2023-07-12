@@ -16,6 +16,8 @@ public class Typing : MonoBehaviour
     public AudioClip breakSE;
     public AudioClip missSE;
     public AudioClip endSE;
+    public AudioClip startSE;
+    public AudioClip goSE;
 
     public static int inputNum = 0;
     public static int point = 0;
@@ -73,10 +75,13 @@ public class Typing : MonoBehaviour
     private List<int> _romNumList = new List<int>();
 
     private static int flag;
+    private static int flag1;
     private static int flag2;
     private void Start()
     {
         flag = 0;
+        flag1 = 0;
+        flag2 = 0;
 
         switch (ButtonDirector.GetLevel())
         {
@@ -452,14 +457,17 @@ public class Typing : MonoBehaviour
     void TimeCount()
     {
         time -= Time.deltaTime;
-        
 
-        if(time > 60.5)
+        if(flag1 == 0 && time > 62.9)
         {
+            flag1 = 1;
+            PlaySE(startSE);
             ready.SetActive(true);
         }
-        else if(60 < time && time <= 60.5)
+        else if(flag2 == 0 && 60 < time && time <= 60.5)
         {
+            flag2 = 1;
+            PlaySE(goSE);
             ready.SetActive(false);
             start.SetActive(true);
         } 
