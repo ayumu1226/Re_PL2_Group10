@@ -4,25 +4,52 @@ using UnityEngine;
 using NCMB;
 using System.Linq;
 using UnityEngine.UI;
+using System;
+using System.Security.Cryptography;
+using UnityEditor.PackageManager;
+using UnityEngine.SceneManagement;
 
 public class LeaderBoard : MonoBehaviour
 {
+    private void Start()
+    {
+        NCMBUser user = new NCMBUser();
+      
+        String UserName="test";
+
+        String Password = LogIn.HashPassword("Password1");
+
+
+        NCMBUser.LogInAsync(UserName.text, Password, (NCMBException e) => {
+            if (e != null)
+            {
+                error.text = "ログインに失敗: " + e.ErrorMessage;
+                UnityEngine.Debug.Log("ログインに失敗: " + e.ErrorMessage);
+            }
+            else
+            {
+                UnityEngine.Debug.Log("ログインに成功！");
+                SceneManager.LoadScene("ChooseModeScene");
+            }
+        });
+
+        fetchTopRankers();
+    }
+
     public Text TopRankers;
 
     void fetchTopRankers()
     {
-        NCMBUser currentUser = NCMBUser.CurrentUser;
         // 順位のカウント
         int count = 0;
-        string tempScore = "";
         List<string> usedUserNames = new List<string>(); // 重複したUserNameを格納するリスト
 
-        // データストアの「easyData」クラスから検索
-        NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject>("easyData");
+        // データストアの「data」クラスから検索
+        NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject>("data");
         // Scoreフィールドの降順でデータを取得
         query.OrderByDescending("score");
         // 検索件数を10件に設定
-        query.Limit = 10;
+        query.Limit = 1000;
         query.FindAsync((List<NCMBObject> objList, NCMBException e) =>
         {
             if (e != null)
@@ -34,36 +61,36 @@ public class LeaderBoard : MonoBehaviour
                 // 検索成功時の処理
                 UnityEngine.Debug.Log("ランキング取得成功");
 
+                string tempScore = "";
+
                 // 値とインデックスのペアをループ処理
-                foreach (NCMBObject obj in objList)
+                for (int i = 0; i < objList.Count; i++)
                 {
+                    NCMBObject obj = objList[i];
                     string userName = obj["UserName"] as string;
 
-                    // 重複したUserNameの場合は次の順位のユーザーを取得する
-                    while (usedUserNames.Contains(userName))
+                    // 重複したUserNameの場合はスキップ
+                    if (usedUserNames.Contains(userName))
                     {
-                        count++;
-                        if (count >= objList.Count)
-                            break;
-
-                        userName = objList[count]["UserName"] as string;
+                        continue;
                     }
 
-                    if (count >= objList.Count)
-                        break;
-
-                    usedUserNames.Add(userName);
-
-                    count++;
+                     count++;
                     // ユーザーネームとスコアを画面表示
-                    tempScore += count.ToString() + "位：" + "　ユーザーネーム：" + userName + "　スコア：" + obj["score"] + "\r\n";
+                    tempScore += count.ToString() + "位：" + userName + "　スコア：" + obj["score"] + "\r\n";
+                    usedUserNames.Add(userName);
+                   
+                    // 上位10件まで表示
+                    if (count >= 10)
+                    {
+                        break;
+                    }
                 }
 
                 TopRankers.GetComponent<Text>().text = tempScore;
             }
         });
     }
-
     public Text userRanking;
 
     void fetchUserRanking()
@@ -158,4 +185,5 @@ public class LeaderBoard : MonoBehaviour
             }
         });
     }
+
 }
