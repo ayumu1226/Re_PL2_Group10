@@ -9,11 +9,13 @@ public class TimebarDirector : MonoBehaviour
 
     void Start()
     {
+        Application.targetFrameRate = 60;
+
         timebar = GameObject.Find("timebar");
     }
 
     public void DecreaseTime()
     {
-        timebar.GetComponent<Image>().fillAmount -= 0.00027777f;
+        timebar.GetComponent<Image>().fillAmount -= 0.000279f;
     }
 }
