@@ -58,59 +58,61 @@ public class ResultDirector : MonoBehaviour
         pmText.text = "";
         sText.text = "";
 
-        //ここからサーバーへのデータストア処理
-        NCMBUser currentUser = NCMBUser.CurrentUser;
-        if (currentUser != null)
+        if (ButtonDirector.GetMode() != 3)//練習モードでないときデータ格納処理はスキップする
         {
-            UnityEngine.Debug.Log("ログイン中のユーザー: " + currentUser.UserName);
+            //ここからサーバーへのデータストア処理
+            NCMBUser currentUser = NCMBUser.CurrentUser;
+            if (currentUser != null)
+            {
+                UnityEngine.Debug.Log("ログイン中のユーザー: " + currentUser.UserName);
+            }
+            else
+            {
+                UnityEngine.Debug.Log("未ログインまたは取得に失敗");
+            }
+
+            int LevelFlag = ButtonDirector.GetLevel();
+
+
+            switch (LevelFlag)
+            {
+                case 1:
+                    // easyに対する処理
+                    //NCMBObjectを作成
+                    NCMBObject easy = new NCMBObject("easyData");
+
+                    //UserNameとscoreをdataクラスに保存
+                    easy["score"] = sNum;
+                    easy["UserName"] = currentUser.UserName;
+
+                    easy.SaveAsync();
+                    break;
+                case 2:
+                    // nomalに対する処理
+                    //NCMBObjectを作成
+                    NCMBObject nomal = new NCMBObject("nomalData");
+
+                    //UserNameとscoreをdataクラスに保存
+                    nomal["score"] = sNum;
+                    nomal["UserName"] = currentUser.UserName;
+
+                    nomal.SaveAsync();
+                    break;
+                case 3:
+                    // hardに対する処理
+                    //NCMBObjectを作成
+                    NCMBObject hard = new NCMBObject("hardData");
+
+                    //UserNameとscoreをdataクラスに保存
+                    hard["score"] = sNum;
+                    hard["UserName"] = currentUser.UserName;
+
+                    hard.SaveAsync();
+                    break;
+                default:
+                    break;
+            }
         }
-        else
-        {
-            UnityEngine.Debug.Log("未ログインまたは取得に失敗");
-        }
-
-        int LevelFlag=ButtonDirector.GetLevel();
-       
-        
-        switch (LevelFlag)
-        {
-            case 1:
-                // easyに対する処理
-                //NCMBObjectを作成
-                NCMBObject easy = new NCMBObject("easyData");
-
-                //UserNameとscoreをdataクラスに保存
-                easy["score"] = sNum;
-                easy["UserName"] = currentUser.UserName;
-                
-                easy.SaveAsync();
-                break;
-            case 2:
-                // nomalに対する処理
-                //NCMBObjectを作成
-                NCMBObject nomal = new NCMBObject("nomalData");
-
-                //UserNameとscoreをdataクラスに保存
-                nomal["score"] = sNum;
-                nomal["UserName"] = currentUser.UserName;
-             
-                nomal.SaveAsync();
-                break;
-            case 3:
-                // hardに対する処理
-                //NCMBObjectを作成
-                NCMBObject hard = new NCMBObject("hardData");
-
-                //UserNameとscoreをdataクラスに保存
-                hard["score"] = sNum;
-                hard["UserName"] = currentUser.UserName;
-              
-                hard.SaveAsync();
-                break;
-            default:
-                break;
-        }
-
     }
 
     private void Update()
