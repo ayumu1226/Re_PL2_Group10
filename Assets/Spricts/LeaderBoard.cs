@@ -98,7 +98,7 @@ public class LeaderBoard : MonoBehaviour
     {
         // データストアの「data」クラスから検索
         NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject>("data");
-        
+       
 
         NCMBUser currentUser = NCMBUser.CurrentUser;
         if (currentUser != null)
@@ -156,62 +156,69 @@ public class LeaderBoard : MonoBehaviour
         if (currentUser != null)
         {
             UnityEngine.Debug.Log("ログイン中のユーザー: " + currentUser.UserName);
+
+            string userName = currentUser.UserName;
+
+            int userRank = -1;
+            List<string> usedUserNames = new List<string>();
+
+            // データストアの「data」クラスから検索
+            NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject>("data");
+            // Scoreフィールドの降順でデータを取得
+            query.OrderByDescending("score");
+            // 検索件数を10件に設定
+            query.Limit = 10000;
+            query.FindAsync((List<NCMBObject> objList, NCMBException e) =>
+            {
+                if (e != null)
+                {
+                    UnityEngine.Debug.Log("ランキング取得失敗");
+                }
+                else
+                {
+                    // 検索成功時の処理
+                    UnityEngine.Debug.Log("ランキング取得成功");
+
+                    // 値とインデックスのペアをループ処理
+                    for (int i = 0; i < objList.Count; i++)
+                    {
+                        NCMBObject obj = objList[i];
+                        string objUserName = obj["UserName"] as string;
+
+                        // 重複したUserNameの場合はスキップ
+                        if (usedUserNames.Contains(objUserName))
+                        {
+                            continue;
+                        }
+
+                        usedUserNames.Add(objUserName);
+
+                        // ユーザーネームが一致する場合、ランクを設定
+                        if (objUserName == userName)
+                        {
+                            userRank = i + 1;
+                            break;
+                        }
+                    }
+
+                    CountUniqueUsers((uniqueUserCount) =>
+                    {
+                        if (userRank == -1)
+                        {
+                            Rank.GetComponent<Text>().text = "ランキング未参加です";
+                        }
+                        else
+                        {
+                            Rank.GetComponent<Text>().text = "あなたは" + uniqueUserCount.ToString() + "人中" + userRank.ToString() + "位です";
+                        }
+                    });
+                }
+            });
         }
         else
         {
-            UnityEngine.Debug.Log("未ログインまたは取得に失敗");
+            Rank.GetComponent<Text>().text = "未ログインまたは取得に失敗";
         }
-        
-        string userName = currentUser.UserName;
-        
-        //string userName = "a";
-        int userRank = 0;
-        List<string> usedUserNames = new List<string>();
-
-        // データストアの「data」クラスから検索
-        NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject>("data");
-        // Scoreフィールドの降順でデータを取得
-        query.OrderByDescending("score");
-        // 検索件数を10件に設定
-        query.Limit = 1000;
-        query.FindAsync((List<NCMBObject> objList, NCMBException e) =>
-        {
-            if (e != null)
-            {
-                UnityEngine.Debug.Log("ランキング取得失敗");
-            }
-            else
-            {
-                // 検索成功時の処理
-                UnityEngine.Debug.Log("ランキング取得成功");
-
-                // 値とインデックスのペアをループ処理
-                for (int i = 0; i < objList.Count; i++)
-                {
-                    NCMBObject obj = objList[i];
-                    string objUserName = obj["UserName"] as string;
-
-                    // 重複したUserNameの場合はスキップ
-                    if (usedUserNames.Contains(objUserName))
-                    {
-                        continue;
-                    }
-
-                    userRank++;
-                    usedUserNames.Add(objUserName);
-
-                    // ユーザーネームが一致する場合、ランクを表示
-                    if (objUserName == userName)
-                    {
-                        CountUniqueUsers((uniqueUserCount) =>
-                        {
-                            Rank.GetComponent<Text>().text = "あなたは" + uniqueUserCount.ToString() + "人中" + userRank.ToString() + "位です";
-                        });
-                        break;
-                    }
-                }
-            }
-        });
     }
 
     void CountUniqueUsers(Action<int> callback)
