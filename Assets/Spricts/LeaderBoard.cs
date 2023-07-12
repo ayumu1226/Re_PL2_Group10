@@ -8,32 +8,15 @@ using System;
 using System.Security.Cryptography;
 using UnityEditor.PackageManager;
 using UnityEngine.SceneManagement;
+using System.Text;
 
 public class LeaderBoard : MonoBehaviour
 {
     private void Start()
     {
-        NCMBUser user = new NCMBUser();
-      
-        String UserName="test";
-
-        String Password = LogIn.HashPassword("Password1");
-
-
-        NCMBUser.LogInAsync(UserName.text, Password, (NCMBException e) => {
-            if (e != null)
-            {
-                error.text = "ログインに失敗: " + e.ErrorMessage;
-                UnityEngine.Debug.Log("ログインに失敗: " + e.ErrorMessage);
-            }
-            else
-            {
-                UnityEngine.Debug.Log("ログインに成功！");
-                SceneManager.LoadScene("ChooseModeScene");
-            }
-        });
 
         fetchTopRankers();
+        fetchUserRanking();
     }
 
     public Text TopRankers;
@@ -75,11 +58,11 @@ public class LeaderBoard : MonoBehaviour
                         continue;
                     }
 
-                     count++;
+                    count++;
                     // ユーザーネームとスコアを画面表示
                     tempScore += count.ToString() + "位：" + userName + "　スコア：" + obj["score"] + "\r\n";
                     usedUserNames.Add(userName);
-                   
+
                     // 上位10件まで表示
                     if (count >= 10)
                     {
@@ -94,96 +77,40 @@ public class LeaderBoard : MonoBehaviour
     public Text userRanking;
 
     void fetchUserRanking()
+    { 
+    // データストアの「data」クラスから検索
+    NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject>("data");
+    // ユーザー名で検索条件を指定
+    query.WhereEqualTo("UserName", "a");
+    // Scoreフィールドの降順でデータを取得
+    query.OrderByDescending("score");
+    // 検索件数を10件に設定
+    query.Limit = 10;
+    query.FindAsync((List<NCMBObject> objList, NCMBException e) =>
     {
-        NCMBUser currentUser = NCMBUser.CurrentUser;
-
-        // 順位のカウント
-        int count = 0;
-        string tempScore = "";
-        // データストアの「easyData」クラスから検索
-        NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject>("easyData");
-        // CurrentUserのキーに対応するスコアのみを検索
-        query.WhereEqualTo("UserName", currentUser.UserName);
-        // Scoreフィールドの降順でデータを取得
-        query.OrderByDescending("score");
-        // 検索件数を10件に設定
-        query.Limit = 10;
-        query.FindAsync((List<NCMBObject> objList, NCMBException e) =>
+        if (e != null)
         {
-            if (e != null)
-            {
-                UnityEngine.Debug.Log("ランキング取得失敗");
-            }
-            else
-            {
-                // 検索成功時の処理
-                UnityEngine.Debug.Log("ランキング取得成功");
+            UnityEngine.Debug.Log("ユーザーランキング取得失敗");
+        }
+        else
+{
+    // 検索成功時の処理
+    UnityEngine.Debug.Log("ユーザーランキング取得成功");
 
-                // 値とインデックスのペアをループ処理
-                foreach (NCMBObject obj in objList)
-                {
-                    count++;
-                    // ユーザーネームとスコアを画面表示
-                    tempScore += count.ToString() + "位：" + " スコア：" + obj["score"] + "\r\n";
-                }
+    string tempScore = "";
 
-                userRanking.GetComponent<Text>().text = tempScore;
-            }
-        });
-    }
-    public Text userRankText;
-
-    void FetchRank()
+    // 値とインデックスのペアをループ処理
+    for (int i = 0; i < objList.Count; i++)
     {
-        NCMBUser currentUser = NCMBUser.CurrentUser;
+        NCMBObject obj = objList[i];
+        string userName = obj["UserName"] as string;
 
-        // 順位のカウント
-        int rank = 0;
-        int userRank = -1; // ユーザーのランク (-1は未ランク付けを表す)
-
-        // データストアの「easyData」クラスから検索
-        NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject>("easyData");
-        // Scoreフィールドの降順でデータを取得
-        query.OrderByDescending("score");
-        // 検索件数を1000件に設定
-        query.Limit = 1000;
-        query.FindAsync((List<NCMBObject> objList, NCMBException e) =>
-        {
-            if (e != null)
-            {
-                UnityEngine.Debug.Log("ランキング取得失敗");
-            }
-            else
-            {
-                // 検索成功時の処理
-                UnityEngine.Debug.Log("ランキング取得成功");
-
-                // 値とインデックスのペアをループ処理
-                foreach (NCMBObject obj in objList)
-                {
-                    rank++;
-
-                    string userName = obj["UserName"] as string;
-
-                    // ユーザーがCurrent Userと一致する場合、ランクを保存
-                    if (userName == currentUser.UserName)
-                    {
-                        userRank = rank;
-                        break;
-                    }
-                }
-
-                // ランクが未設定の場合はランキング外を表示
-                if (userRank == -1)
-                {
-                    userRank = rank + 1;
-                }
-
-                // ユーザーランクをテキストに格納
-                string userRankTextString = "ユーザーランク: " + userRank.ToString();
-                userRankText.text = userRankTextString;
-            }
-        });
+        // ユーザーネームとスコアを画面表示
+        tempScore += (i + 1).ToString() + "位：" + userName + "　スコア：" + obj["score"] + "\r\n";
     }
 
+    userRanking.text = tempScore;
+}
+    });
+}
 }

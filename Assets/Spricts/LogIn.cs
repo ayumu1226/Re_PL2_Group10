@@ -121,7 +121,7 @@ public class LogIn : MonoBehaviour
         return hasUpperCase && hasLowerCase && hasDigit;
     }
 
-    public string HashPassword(string password)
+     string HashPassword(string password)
     {
         using (SHA1 sha1 = SHA1.Create())
         {
