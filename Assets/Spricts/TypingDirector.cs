@@ -11,6 +11,7 @@ using UnityEngine.Experimental.Audio;
 public class Typing : MonoBehaviour
 {
     GameObject timebar;
+
     private AudioSource audioSource = null;
     public AudioClip AttackSE;
     public AudioClip breakSE;
