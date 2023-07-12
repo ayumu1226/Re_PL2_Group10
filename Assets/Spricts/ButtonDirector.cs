@@ -10,8 +10,8 @@ public class ButtonDirector : MonoBehaviour
 
     private void Start()
     {
-        mode = 0;
-        level = 0;
+        //mode = 0;
+        //level = 0;
     }
 
     public void button1() // í èÌÉÇÅ[Éh

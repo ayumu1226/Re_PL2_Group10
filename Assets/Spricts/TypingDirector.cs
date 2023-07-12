@@ -72,8 +72,8 @@ public class Typing : MonoBehaviour
     // _romNumList[2] = 0 Å® 2ï∂éöñ⁄ÇÕ1âÒÇÃì¸óÕÇÃÇ›
     private List<int> _romNumList = new List<int>();
 
-    private static int flag; 
-
+    private static int flag;
+    private static int flag2;
     private void Start()
     {
         flag = 0;
@@ -96,7 +96,16 @@ public class Typing : MonoBehaviour
 
 
         a = true;
-        tText.text = "60.0";
+
+        if(ButtonDirector.GetMode() != 3)
+        {
+            tText.text = "60.0";
+        }
+        else
+        {
+            tText.text = "";
+        }
+        
 
         timebar = GameObject.Find("TimebarDirector");
         audioSource = GetComponent<AudioSource>();
@@ -114,6 +123,8 @@ public class Typing : MonoBehaviour
 
         // ñ‚ëËÇçXêV
         NewQuestion();
+
+        Debug.Log(ButtonDirector.GetMode());
     }
 
 
@@ -125,7 +136,11 @@ public class Typing : MonoBehaviour
             Check();
         }
 
-        TimeCount();
+        if(ButtonDirector.GetMode() != 3 || time >= 60 || time <= 0)
+        {
+            TimeCount();
+        }
+        
     }
 
     void SetList()
@@ -145,7 +160,7 @@ public class Typing : MonoBehaviour
         // 0î‘ñ⁄Ç…ñﬂÇ∑
         _aNum = 0;
         sum++;
-        Debug.Log(sum);
+        //Debug.Log(sum);
 
         if(sum > 1)
         {
@@ -305,6 +320,13 @@ public class Typing : MonoBehaviour
         aText.text = "<color=#6A6A6A>" + _aString.Substring(0, _aNum) + "</color>"
                      + "<color=#FF0000>" + _aString.Substring(_aNum, 1) + "</color>"
                      + _aString.Substring(_aNum + 1);
+
+        if(ButtonDirector.GetMode() == 2)
+        {
+            time = 0;
+            Debug.Log(time);
+            
+        }
     }
 
     // ì¸óÕÇ≥ÇÍÇΩï∂éöÇÃê≥åÎîªíË
@@ -316,6 +338,11 @@ public class Typing : MonoBehaviour
         int furiCount = _furiCountList[_aNum];
 
         isCorrect = false;
+
+        if(ButtonDirector.GetMode() == 3 && Input.GetKeyDown("return"))
+        {
+            time = 0;
+        }
 
         if (Input.GetKeyDown(_aString[_aNum].ToString()))
         {
