@@ -28,66 +28,82 @@ public class LeaderBoard : MonoBehaviour
 
     void fetchTopRankers()
     {
-        // 順位のカウント
-        int count = 0;
-        List<string> usedUserNames = new List<string>(); // 重複したUserNameを格納するリスト
+            // 順位のカウント
+            int count = 0;
+            List<string> usedUserNames = new List<string>(); // 重複したUserNameを格納するリスト
 
-        // データストアの「data」クラスから検索
-        NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject>("data");
-        // Scoreフィールドの降順でデータを取得
-        query.OrderByDescending("score");
-        // 検索件数を10件に設定
-        query.Limit = 1000;
-        query.FindAsync((List<NCMBObject> objList, NCMBException e) =>
-        {
-            if (e != null)
+            int ModeFlag = RankingManager.GetFlag();
+
+            // データストアの「data」クラスから検索
+            NCMBQuery<NCMBObject> query;
+            if (ModeFlag == 1)
             {
-                UnityEngine.Debug.Log("ランキング取得失敗");
+                query = new NCMBQuery<NCMBObject>("nomal");
+            }
+            else if (ModeFlag == 2)
+            {
+                query = new NCMBQuery<NCMBObject>("careful");
             }
             else
             {
-                // 検索成功時の処理
-                UnityEngine.Debug.Log("ランキング取得成功");
-
-                // ユーザーネームを格納する変数とスコアを格納する変数
-                string userNames = "";
-                string scores = "";
-                string oneToTen = "";
-
-                // 値とインデックスのペアをループ処理
-                for (int i = 0; i < objList.Count; i++)
-                {
-                    NCMBObject obj = objList[i];
-                    string userName = obj["UserName"] as string;
-
-                    // 重複したUserNameの場合はスキップ
-                    if (usedUserNames.Contains(userName))
-                    {
-                        continue;
-                    }
-
-                    count++;
-                    usedUserNames.Add(userName);
-
-                    // ユーザーネームとスコアを文字列に追加
-                    userNames += userName + "\r\n";
-                    scores += obj["score"] + "\r\n";
-                    oneToTen += count.ToString() + "位：" + "\r\n";
-
-                    // 上位10件まで表示
-                    if (count >= 10)
-                    {
-                        break;
-                    }
-                }
-
-                // 分割したテキストをそれぞれのテキストコンポーネントに設定
-                TopRankers.GetComponent<Text>().text = userNames;
-                TopRankersScore.GetComponent<Text>().text = scores;
-                TopOneToTen.GetComponent<Text>().text = oneToTen;
+                UnityEngine.Debug.Log("無効なモードフラグ");
+                return;
             }
-        });
-    }
+
+            // Scoreフィールドの降順でデータを取得
+            query.OrderByDescending("score");
+            // 検索件数を10件に設定
+            query.Limit = 1000;
+            query.FindAsync((List<NCMBObject> objList, NCMBException e) =>
+            {
+                if (e != null)
+                {
+                    UnityEngine.Debug.Log("ランキング取得失敗");
+                }
+                else
+                {
+                    // 検索成功時の処理
+                    UnityEngine.Debug.Log("ランキング取得成功");
+
+                    // ユーザーネームを格納する変数とスコアを格納する変数
+                    string userNames = "";
+                    string scores = "";
+                    string oneToTen = "";
+
+                    // 値とインデックスのペアをループ処理
+                    for (int i = 0; i < objList.Count; i++)
+                    {
+                        NCMBObject obj = objList[i];
+                        string userName = obj["UserName"] as string;
+
+                        // 重複したUserNameの場合はスキップ
+                        if (usedUserNames.Contains(userName))
+                        {
+                            continue;
+                        }
+
+                        count++;
+                        usedUserNames.Add(userName);
+
+                        // ユーザーネームとスコアを文字列に追加
+                        userNames += userName + "\r\n";
+                        scores += obj["score"] + "\r\n";
+                        oneToTen += count.ToString() + "位：" + "\r\n";
+
+                        // 上位10件まで表示
+                        if (count >= 10)
+                        {
+                            break;
+                        }
+                    }
+
+                    // 分割したテキストをそれぞれのテキストコンポーネントに設定
+                    TopRankers.GetComponent<Text>().text = userNames;
+                    TopRankersScore.GetComponent<Text>().text = scores;
+                    TopOneToTen.GetComponent<Text>().text = oneToTen;
+                }
+            });
+        }
 
 
 

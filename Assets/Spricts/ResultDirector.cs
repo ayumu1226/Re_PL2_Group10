@@ -71,15 +71,15 @@ public class ResultDirector : MonoBehaviour
                 UnityEngine.Debug.Log("未ログインまたは取得に失敗");
             }
 
-            int LevelFlag = ButtonDirector.GetLevel();
+            int ModeFlag = ButtonDirector.GetMode();
 
 
-            switch (LevelFlag)
+            switch (ModeFlag)
             {
                 case 1:
-                    // easyに対する処理
+                    // 通常モードに対する処理
                     //NCMBObjectを作成
-                    NCMBObject easy = new NCMBObject("easyData");
+                    NCMBObject easy = new NCMBObject("nomal");
 
                     //UserNameとscoreをdataクラスに保存
                     easy["score"] = sNum;
@@ -88,26 +88,15 @@ public class ResultDirector : MonoBehaviour
                     easy.SaveAsync();
                     break;
                 case 2:
-                    // nomalに対する処理
+                    // 慎重モードに対する処理
                     //NCMBObjectを作成
-                    NCMBObject nomal = new NCMBObject("nomalData");
+                    NCMBObject nomal = new NCMBObject("careful");
 
                     //UserNameとscoreをdataクラスに保存
                     nomal["score"] = sNum;
                     nomal["UserName"] = currentUser.UserName;
 
                     nomal.SaveAsync();
-                    break;
-                case 3:
-                    // hardに対する処理
-                    //NCMBObjectを作成
-                    NCMBObject hard = new NCMBObject("hardData");
-
-                    //UserNameとscoreをdataクラスに保存
-                    hard["score"] = sNum;
-                    hard["UserName"] = currentUser.UserName;
-
-                    hard.SaveAsync();
                     break;
                 default:
                     break;

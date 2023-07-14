@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class RankingManager : MonoBehaviour
 {
-    public static int flag;
+    public static int flag=0;
 
     public void Mode1Button()
     {
