@@ -54,19 +54,24 @@ public class ButtonDirector : MonoBehaviour
         SceneManager.LoadScene("GameScene");
     }
 
-    public void buttonback()
+    public void ButtonBack()
     {
         SceneManager.LoadScene("ChooseModeScene");
     }
 
-    public void buttontitle()
+    public void ButtonTitle()
     {
         SceneManager.LoadScene("LoginScene");
     }
 
-    public void buttonranking()
+    public void ButtonRanking()
     {
         SceneManager.LoadScene("ChooseLeaderBoard");
+    }
+
+    public void ButtonStatus()
+    {
+        SceneManager.LoadScene("StatusScene");
     }
 
     public static int GetMode()

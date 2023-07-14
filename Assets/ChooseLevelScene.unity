@@ -1232,7 +1232,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1598352120}
         m_TargetAssemblyTypeName: ButtonDirector, Assembly-CSharp
-        m_MethodName: buttonback
+        m_MethodName: ButtonBack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
