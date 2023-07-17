@@ -111,9 +111,24 @@ public class LeaderBoard : MonoBehaviour
 
     void fetchUserRanking()
     {
-        // データストアの「data」クラスから検索
-        NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject>("data");
-       
+
+        int ModeFlag = RankingManager.GetFlag();
+        NCMBQuery<NCMBObject> query;
+        if (ModeFlag == 1)
+        {
+            query = new NCMBQuery<NCMBObject>("nomal");
+        }
+        else if (ModeFlag == 2)
+        {
+            query = new NCMBQuery<NCMBObject>("careful");
+        }
+        else
+        {
+            UnityEngine.Debug.Log("無効なモードフラグ");
+            return;
+        }
+
+
 
         NCMBUser currentUser = NCMBUser.CurrentUser;
         if (currentUser != null)
@@ -175,10 +190,25 @@ public class LeaderBoard : MonoBehaviour
             string userName = currentUser.UserName;
 
             int userRank = -1;
-            List<string> usedUserNames = new List<string>();
+
+            Dictionary<string, bool> usedUserNames = new Dictionary<string, bool>();
 
             // データストアの「data」クラスから検索
-            NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject>("data");
+            int ModeFlag = RankingManager.GetFlag();
+            NCMBQuery<NCMBObject> query;
+            if (ModeFlag == 1)
+            {
+                query = new NCMBQuery<NCMBObject>("nomal");
+            }
+            else if (ModeFlag == 2)
+            {
+                query = new NCMBQuery<NCMBObject>("careful");
+            }
+            else
+            {
+                UnityEngine.Debug.Log("無効なモードフラグ");
+                return;
+            }
             // Scoreフィールドの降順でデータを取得
             query.OrderByDescending("score");
             // 検索件数を10件に設定
@@ -201,12 +231,12 @@ public class LeaderBoard : MonoBehaviour
                         string objUserName = obj["UserName"] as string;
 
                         // 重複したUserNameの場合はスキップ
-                        if (usedUserNames.Contains(objUserName))
+                        if (usedUserNames.ContainsKey(objUserName))
                         {
                             continue;
                         }
 
-                        usedUserNames.Add(objUserName);
+                        usedUserNames.Add(objUserName, true);
 
                         // ユーザーネームが一致する場合、ランクを設定
                         if (objUserName == userName)
@@ -224,7 +254,15 @@ public class LeaderBoard : MonoBehaviour
                         }
                         else
                         {
-                            Rank.GetComponent<Text>().text = "あなたは" + uniqueUserCount.ToString() + "人中" + userRank.ToString() + "位です";
+                            if (userRank != objList.Count)
+                            {
+                                Rank.GetComponent<Text>().text = "あなたは" + uniqueUserCount.ToString() + "人中" + userRank.ToString() + "位です";
+
+                            }
+                            else
+                            {
+                                Rank.GetComponent<Text>().text = "あなたは" + uniqueUserCount.ToString() + "人の中で最下位です";
+                            }
                         }
                     });
                 }
@@ -238,9 +276,23 @@ public class LeaderBoard : MonoBehaviour
 
     void CountUniqueUsers(Action<int> callback)
     {
-        // データストアの「data」クラスから検索
-        NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject>("data");
-        query.Limit = 10000;
+        int ModeFlag = RankingManager.GetFlag();
+        NCMBQuery<NCMBObject> query;
+        if (ModeFlag == 1)
+        {
+            query = new NCMBQuery<NCMBObject>("nomal");
+        }
+        else if (ModeFlag == 2)
+        {
+            query = new NCMBQuery<NCMBObject>("careful");
+        }
+        else
+        {
+            UnityEngine.Debug.Log("無効なモードフラグ");
+            return;
+        }
+
+        query.Limit = 1000;
         query.FindAsync((List<NCMBObject> objList, NCMBException e) =>
         {
             if (e != null)
