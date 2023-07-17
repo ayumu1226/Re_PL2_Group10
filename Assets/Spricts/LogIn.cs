@@ -85,6 +85,16 @@ public class LogIn : MonoBehaviour
                 if (currentUser != null)
                 {
                     UnityEngine.Debug.Log("ログイン中のユーザー: " + currentUser.UserName);
+                   
+                    NCMBObject userData = new NCMBObject("UserData");
+                    userData["UserName"] = currentUser.UserName;
+                    userData["enemy"] = 0;
+                    userData["missSum"] = 0;
+                    userData["validSum"] = 0;//正しい打鍵をした数
+                    userData["timeSum"] = 0;//総時間数(s)
+                    userData["typeSum"] = 0;//総打鍵数
+
+                    userData.SaveAsync();
                     LogInButton();
                 }
                 else
