@@ -26,8 +26,6 @@ public class Typing : MonoBehaviour
     public static int sum = 0;
     public static bool a = true;
 
-    public static float elapseTime = 0;
-
     // startÇ∆endÉçÉS
     [SerializeField] GameObject ready;
     [SerializeField] GameObject start;
@@ -121,7 +119,6 @@ public class Typing : MonoBehaviour
         inputNum = 0;
         point = 0;
         miss = 0;
-        elapseTime = 0;
 
         Application.targetFrameRate = 60;
 
@@ -332,10 +329,8 @@ public class Typing : MonoBehaviour
 
         if(ButtonDirector.GetMode() == 2)
         {
-            elapseTime = 60 - time;
-
             time = 0;
-            //Debug.Log(time);
+            Debug.Log(time);
             
         }
     }
@@ -502,8 +497,6 @@ public class Typing : MonoBehaviour
 
         if ( flag == 0 && time <= 0)
         {
-            GetElapseTime();
-
             flag = 1;
             PlaySE(endSE);
 
@@ -544,24 +537,6 @@ public class Typing : MonoBehaviour
         else
         {
             Debug.Log("å¯â âπÇ»Çµ");
-        }
-    }
-
-    public static float GetElapseTime()
-    {
-        if (ButtonDirector.GetMode() == 2 && miss == 0)
-        {
-            Debug.Log("60");
-            return 60;
-        }
-        else if(ButtonDirector.GetMode() == 2)
-        {
-            Debug.Log(elapseTime);
-            return elapseTime;
-        }
-        else
-        {
-            return 60;
         }
     }
 }
