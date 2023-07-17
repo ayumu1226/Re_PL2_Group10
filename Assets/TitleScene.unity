@@ -893,7 +893,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1691979498}
         m_TargetAssemblyTypeName: ButtonDirector, Assembly-CSharp
-        m_MethodName: buttontitle
+        m_MethodName: ButtonTitle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
