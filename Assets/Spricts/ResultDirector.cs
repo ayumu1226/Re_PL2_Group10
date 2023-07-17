@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using NCMB;
 using System.Threading.Tasks;
+using System.Net;
+using System;
 
 public class ResultDirector : MonoBehaviour
 {
@@ -60,6 +62,8 @@ public class ResultDirector : MonoBehaviour
 
         if (ButtonDirector.GetMode() != 3)//練習モードでないときデータ格納処理はスキップする
         {
+
+
             //ここからサーバーへのデータストア処理
             NCMBUser currentUser = NCMBUser.CurrentUser;
             if (currentUser != null)
@@ -73,30 +77,36 @@ public class ResultDirector : MonoBehaviour
 
             int ModeFlag = ButtonDirector.GetMode();
 
+            //IP格納をする
+            string externalIpString = new WebClient().DownloadString("https://ipinfo.io/ip");
+            var externalIp = IPAddress.Parse(externalIpString);
 
+            
             switch (ModeFlag)
             {
                 case 1:
                     // 通常モードに対する処理
                     //NCMBObjectを作成
-                    NCMBObject easy = new NCMBObject("nomal");
+                    NCMBObject Nomal = new NCMBObject("nomal");
 
                     //UserNameとscoreをdataクラスに保存
-                    easy["score"] = sNum;
-                    easy["UserName"] = currentUser.UserName;
+                    Nomal["score"] = sNum;
+                    Nomal["UserName"] = currentUser.UserName;
+                    Nomal["IP"] = externalIp.ToString();
 
-                    easy.SaveAsync();
+                    Nomal.SaveAsync();
                     break;
                 case 2:
                     // 慎重モードに対する処理
                     //NCMBObjectを作成
-                    NCMBObject nomal = new NCMBObject("careful");
+                    NCMBObject Careful = new NCMBObject("careful");
 
                     //UserNameとscoreをdataクラスに保存
-                    nomal["score"] = sNum;
-                    nomal["UserName"] = currentUser.UserName;
+                    Careful["score"] = sNum;
+                    Careful["UserName"] = currentUser.UserName;
+                    Careful["IP"] = externalIp.ToString();
 
-                    nomal.SaveAsync();
+                    Careful.SaveAsync();
                     break;
                 default:
                     break;
