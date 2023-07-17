@@ -6,7 +6,6 @@ using System.Linq;
 using UnityEngine.UI;
 using System;
 using System.Security.Cryptography;
-using UnityEditor.PackageManager;
 using UnityEngine.SceneManagement;
 using System.Text;
 using System.Globalization;
