@@ -29,4 +29,8 @@ public class LogInSceneManagement : MonoBehaviour
             }
         });
     }
+    public void GoToStatusScene()
+    {
+        SceneManager.LoadScene("StatusScene");
+    }
 }

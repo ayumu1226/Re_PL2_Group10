@@ -15,7 +15,7 @@ public class InputDummydata : MonoBehaviour
         // ユーザーごとにデータを生成して保存
         foreach (string user in users)
         {
-            NCMBObject data = new NCMBObject("data");
+            NCMBObject data = new NCMBObject("careful");
 
             // 20組のランダムな点数データを生成して保存
             for (int i = 0; i < 20; i++)

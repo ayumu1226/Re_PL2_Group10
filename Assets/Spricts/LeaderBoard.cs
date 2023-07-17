@@ -240,7 +240,7 @@ public class LeaderBoard : MonoBehaviour
     {
         // データストアの「data」クラスから検索
         NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject>("data");
-        query.Limit = 1000;
+        query.Limit = 10000;
         query.FindAsync((List<NCMBObject> objList, NCMBException e) =>
         {
             if (e != null)
