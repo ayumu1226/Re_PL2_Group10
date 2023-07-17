@@ -7,6 +7,7 @@ using NCMB;
 using System.Threading.Tasks;
 using System.Net;
 using System;
+using System.Linq;
 
 public class ResultDirector : MonoBehaviour
 {
@@ -81,7 +82,44 @@ public class ResultDirector : MonoBehaviour
             string externalIpString = new WebClient().DownloadString("https://ipinfo.io/ip");
             var externalIp = IPAddress.Parse(externalIpString);
 
-            
+            string username = currentUser.UserName; // 更新したいユーザー名
+
+            NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject>("UserData");
+            query.WhereEqualTo("UserName", currentUser.UserName);
+            query.FindAsync((List<NCMBObject> objList, NCMBException e) =>
+            {
+                if (e != null)
+                {
+                    // 検索失敗時の処理
+                }
+                else
+                {
+                    foreach (NCMBObject obj in objList)
+                    {
+                        obj.Increment("enemy", Typing.GetSum());
+                        obj.Increment("missSum", Typing.GetMiss());
+                        obj.Increment("validSum", Typing.GetInputNum() - Typing.GetMiss());
+                        obj.Increment("timeSum", Typing.GetElapseTime());
+
+                        // データを保存
+                        obj.SaveAsync((NCMBException saveException) =>
+                        {
+                            if (saveException != null)
+                            {
+                                // 保存失敗時の処理
+                            }
+                            else
+                            {
+                                // 保存成功時の処理
+                                Debug.Log("Data updated successfully.");
+                            }
+                        });
+                    }
+                }
+            });
+
+
+
             switch (ModeFlag)
             {
                 case 1:
@@ -93,7 +131,6 @@ public class ResultDirector : MonoBehaviour
                     Nomal["score"] = sNum;
                     Nomal["UserName"] = currentUser.UserName;
                     Nomal["IP"] = externalIp.ToString();
-
                     Nomal.SaveAsync();
                     break;
                 case 2:

@@ -90,7 +90,6 @@ public class LogIn : MonoBehaviour
                 userData["missSum"] = 0;
                 userData["validSum"] = 0;//³‚µ‚¢‘ÅŒ®‚ğ‚µ‚½”
                 userData["timeSum"] = 0;//‘ŠÔ”(s)
-                userData["typeSum"] = 0;//‘‘ÅŒ®”
 
                 userData.SaveAsync();
                 
