@@ -80,21 +80,23 @@ public class LogIn : MonoBehaviour
             }
             else
             {
-                UnityEngine.Debug.Log("V‹K“o˜^‚É¬Œ÷");
+                
                 NCMBUser currentUser = NCMBUser.CurrentUser;
+
+                UnityEngine.Debug.Log("V‹K“o˜^‚É¬Œ÷");
+                NCMBObject userData = new NCMBObject("UserData");
+                userData["UserName"] = currentUser.UserName;
+                userData["enemy"] = 0;
+                userData["missSum"] = 0;
+                userData["validSum"] = 0;//³‚µ‚¢‘ÅŒ®‚ğ‚µ‚½”
+                userData["timeSum"] = 0;//‘ŠÔ”(s)
+                userData["typeSum"] = 0;//‘‘ÅŒ®”
+
+                userData.SaveAsync();
+                
                 if (currentUser != null)
                 {
                     UnityEngine.Debug.Log("ƒƒOƒCƒ“’†‚Ìƒ†[ƒU[: " + currentUser.UserName);
-                   
-                    NCMBObject userData = new NCMBObject("UserData");
-                    userData["UserName"] = currentUser.UserName;
-                    userData["enemy"] = 0;
-                    userData["missSum"] = 0;
-                    userData["validSum"] = 0;//³‚µ‚¢‘ÅŒ®‚ğ‚µ‚½”
-                    userData["timeSum"] = 0;//‘ŠÔ”(s)
-                    userData["typeSum"] = 0;//‘‘ÅŒ®”
-
-                    userData.SaveAsync();
                     LogInButton();
                 }
                 else
@@ -104,6 +106,7 @@ public class LogIn : MonoBehaviour
   
             }
         });
+
     }
     private bool IsValidPassword(string password)
     {
