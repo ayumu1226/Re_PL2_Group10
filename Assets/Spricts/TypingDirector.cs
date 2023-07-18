@@ -531,7 +531,7 @@ public class Typing : MonoBehaviour
 
     public static int GetSum()
     {
-        return sum;
+        return sum - 1;
     }
 
     public void PlaySE(AudioClip clip)
