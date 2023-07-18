@@ -17,7 +17,7 @@ public class Effectgenerator : MonoBehaviour
     void Update()
     {
         point = Typing.GetPoint();
-        sum  = Typing.GetSum() - 1;
+        sum  = Typing.GetSum();
 
         if(point > beforePoint)
         {
