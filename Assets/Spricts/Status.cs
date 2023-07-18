@@ -61,9 +61,9 @@ public class Status : MonoBehaviour
                     if (timeSum == 0)
                     {
                         Enemy.text = "0体";
-                        TypeSpeed.text = "データがありません";
-                        Accuracy.text = "データがありません";
-                        InputSum.text = "データがありません";
+                        TypeSpeed.text = "データなし";
+                        Accuracy.text = "データなし";
+                        InputSum.text = "データなし";
 
                     }
                     else
