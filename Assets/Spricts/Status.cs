@@ -58,10 +58,22 @@ public class Status : MonoBehaviour
                     float accuracy = (float)Math.Round((float)vaildSum / (vaildSum + missSum)*100, 1);
                     int inputSum = vaildSum + missSum;
 
-                    Enemy.text = enemyCount.ToString()+"体";
-                    TypeSpeed.text = typeSpeed.ToString()+"文字/s";
-                    Accuracy.text = accuracy.ToString()+"%";
-                    InputSum.text = inputSum.ToString()+"回";
+                    if (timeSum == 0)
+                    {
+                        Enemy.text = "0体";
+                        TypeSpeed.text = "データがありません";
+                        Accuracy.text = "データがありません";
+                        InputSum.text = "データがありません";
+
+                    }
+                    else
+                    {
+                        Enemy.text = enemyCount.ToString() + "体";
+                        TypeSpeed.text = typeSpeed.ToString() + "文字/s";
+                        Accuracy.text = accuracy.ToString() + "%";
+                        InputSum.text = inputSum.ToString() + "回";
+                    }
+
                     UserName.text = currentUser.UserName;
                 }
             });
