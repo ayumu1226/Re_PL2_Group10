@@ -80,31 +80,33 @@ public class LogIn : MonoBehaviour
             }
             else
             {
-                
-                NCMBUser currentUser = NCMBUser.CurrentUser;
+                String Password = HashPassword(PassWord.text);
+
+
+                NCMBUser.LogInAsync(UserName.text, Password, (NCMBException e) => {
+                    if (e != null)
+                    {
+                        error.text = "ログインに失敗: " + e.ErrorMessage;
+                        UnityEngine.Debug.Log("ログインに失敗: " + e.ErrorMessage);
+                    }
+                    else
+                    {
+                        UnityEngine.Debug.Log("ログインに成功！");
+                    }
+                });
+
                 NCMBObject userData = new NCMBObject("UserData");
- 
-                
-                userData["UserName"] = currentUser.UserName;
+
+                userData["UserName"] = UserName.text;
                 userData["enemy"] = 0;
                 userData["missSum"] = 0;
-                userData["validSum"] = 0;//正しい打鍵をした数
-                userData["timeSum"] = 0;//総時間数(s)
+                userData["validSum"] = 0; //正しい打鍵をした数
+                userData["timeSum"] = 0; //総時間数(s)
 
                 UnityEngine.Debug.Log("新規登録に成功");
-
                 userData.SaveAsync();
-                
-                if (currentUser != null)
-                {
-                    UnityEngine.Debug.Log("ログイン中のユーザー: " + currentUser.UserName);
-                    LogInButton();
-                }
-                else
-                {
-                    UnityEngine.Debug.Log("未ログインまたは取得に失敗");
-                }
-  
+                SceneManager.LoadScene("ChooseModeScene");
+
             }
         });
 
