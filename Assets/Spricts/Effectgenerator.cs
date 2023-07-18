@@ -9,7 +9,7 @@ public class Effectgenerator : MonoBehaviour
     [SerializeField] ParticleSystem DamageEffect2;
 
     static int beforePoint = 0;
-    static int beforeSum = 1;
+    static int beforeSum = 0;
 
     int point = 0;
     int sum = 0;
@@ -17,7 +17,7 @@ public class Effectgenerator : MonoBehaviour
     void Update()
     {
         point = Typing.GetPoint();
-        sum  = Typing.GetSum();
+        sum  = Typing.GetSum() - 1;
 
         if(point > beforePoint)
         {
