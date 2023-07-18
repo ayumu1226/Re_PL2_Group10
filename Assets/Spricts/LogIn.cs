@@ -82,14 +82,16 @@ public class LogIn : MonoBehaviour
             {
                 
                 NCMBUser currentUser = NCMBUser.CurrentUser;
-
-                UnityEngine.Debug.Log("V‹K“o˜^‚É¬Œ÷");
                 NCMBObject userData = new NCMBObject("UserData");
+ 
+                
                 userData["UserName"] = currentUser.UserName;
                 userData["enemy"] = 0;
                 userData["missSum"] = 0;
                 userData["validSum"] = 0;//³‚µ‚¢‘ÅŒ®‚ğ‚µ‚½”
                 userData["timeSum"] = 0;//‘ŠÔ”(s)
+
+                UnityEngine.Debug.Log("V‹K“o˜^‚É¬Œ÷");
 
                 userData.SaveAsync();
                 
