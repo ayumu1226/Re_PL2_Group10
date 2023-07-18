@@ -134,7 +134,16 @@ public class Status : MonoBehaviour
                         rank += obj["score"];
                     }
                 }
-                HighScore.text = rank;
+                if (rank != "")
+                {
+                    HighScore.text = rank;
+                }
+                else
+                {
+
+                    HighScore.text = "ÉfÅ[É^Ç»Çµ";
+                }
+
             }
         });
     }
