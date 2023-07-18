@@ -224,11 +224,15 @@ public class LeaderBoard : MonoBehaviour
                     // 検索成功時の処理
                     UnityEngine.Debug.Log("ランキング取得成功");
 
+                    // ユーザー名と最も高いスコアのペアを格納するリスト
+                    List<KeyValuePair<string, int>> userScoreList = new List<KeyValuePair<string, int>>();
+
                     // 値とインデックスのペアをループ処理
                     for (int i = 0; i < objList.Count; i++)
                     {
                         NCMBObject obj = objList[i];
                         string objUserName = obj["UserName"] as string;
+                        int objScore = Convert.ToInt32(obj["score"]);
 
                         // 重複したUserNameの場合はスキップ
                         if (usedUserNames.ContainsKey(objUserName))
@@ -238,8 +242,18 @@ public class LeaderBoard : MonoBehaviour
 
                         usedUserNames.Add(objUserName, true);
 
-                        // ユーザーネームが一致する場合、ランクを設定
-                        if (objUserName == userName)
+                        // ユーザー名とスコアのペアをリストに追加
+                        userScoreList.Add(new KeyValuePair<string, int>(objUserName, objScore));
+                    }
+
+                    // リストをスコアの降順で並び替え
+                    userScoreList.Sort((x, y) => y.Value.CompareTo(x.Value));
+
+                    // 順位を算出
+                    for (int i = 0; i < userScoreList.Count; i++)
+                    {
+                        KeyValuePair<string, int> userScorePair = userScoreList[i];
+                        if (userScorePair.Key == userName)
                         {
                             userRank = i + 1;
                             break;
@@ -254,15 +268,7 @@ public class LeaderBoard : MonoBehaviour
                         }
                         else
                         {
-                            if (userRank != objList.Count)
-                            {
-                                Rank.GetComponent<Text>().text = "あなたは" + uniqueUserCount.ToString() + "人中" + userRank.ToString() + "位です";
-
-                            }
-                            else
-                            {
-                                Rank.GetComponent<Text>().text = "あなたは" + uniqueUserCount.ToString() + "人の中で最下位です";
-                            }
+                            Rank.GetComponent<Text>().text = "あなたは" + uniqueUserCount.ToString() + "人中" + userRank.ToString() + "位です";
                         }
                     });
                 }
@@ -273,6 +279,9 @@ public class LeaderBoard : MonoBehaviour
             Rank.GetComponent<Text>().text = "未ログインまたは取得に失敗";
         }
     }
+
+
+
 
     void CountUniqueUsers(Action<int> callback)
     {
