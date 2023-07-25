@@ -54,6 +54,14 @@ public class ButtonDirector : MonoBehaviour
         SceneManager.LoadScene("GameScene");
     }
 
+    public void button7() // jouhou
+    {
+        GameObject gameObject = GameObject.Find("BGM");
+        gameObject.GetComponent<BGM>().BGMdown();
+        level = 4;
+        SceneManager.LoadScene("GameScene");
+    }
+
     public void ButtonBack()
     {
         SceneManager.LoadScene("ChooseModeScene");

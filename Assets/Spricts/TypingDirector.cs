@@ -99,8 +99,12 @@ public class Typing : MonoBehaviour
                 _furigana = Resources.Load("hard_hiragana", typeof(TextAsset)) as TextAsset;
                 _question = Resources.Load("hard_kanji", typeof(TextAsset)) as TextAsset;
                 break;
+            case 4:
+                Debug.Log("level4");
+                _furigana = Resources.Load("jouhoukou_hiragana", typeof(TextAsset)) as TextAsset;
+                _question = Resources.Load("jouhoukou_kanji", typeof(TextAsset)) as TextAsset;
+                break;
         }
-
 
         a = true;
 
@@ -112,7 +116,6 @@ public class Typing : MonoBehaviour
         {
             tText.text = "60.0";
         }
-        
 
         timebar = GameObject.Find("TimebarDirector");
         audioSource = GetComponent<AudioSource>();
@@ -134,8 +137,6 @@ public class Typing : MonoBehaviour
 
         Debug.Log(ButtonDirector.GetMode());
     }
-
-
 
     private void Update()
     {
